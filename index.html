@@ -1738,7 +1738,7 @@ function dismissInstall(){
 
 if('serviceWorker' in navigator){
   window.addEventListener('load',()=>{
-    navigator.serviceWorker.register('/service_worker.js')
+    navigator.serviceWorker.register('/anas-store-app/sw.js')
       .then(reg=>{
         console.log('✅ Service Worker تم تسجيله بنجاح');
         reg.addEventListener('updatefound',()=>{
