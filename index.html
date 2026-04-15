@@ -2,13 +2,18 @@
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="مدير دخلي">
+<meta name="apple-mobile-web-app-title" content="المدير المالي">
 <meta name="theme-color" content="#070b14">
-<link rel="manifest" href="manifest.json">
+<meta name="description" content="تطبيق ذكي لإدارة الدخل اليومي والتوزيع التلقائي للمصروفات والالتزامات">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<link rel="manifest" href="/manifest.json">
+<link rel="icon" type="image/png" href="/app_icon_192x192.png" sizes="192x192">
+<link rel="icon" type="image/png" href="/app_icon_512x512.png" sizes="512x512">
+<link rel="apple-touch-icon" href="/app_icon_192x192.png">
 <title>مدير دخلي الذكي</title>
 <style>
 :root {
@@ -26,6 +31,8 @@
   --text:      #e2e8f0;
   --muted:     #64748b;
   --radius:    16px;
+  --gold:      #fbbf24;
+  --gold-dim:  rgba(251,191,36,0.1);
 }
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
 body{
@@ -409,8 +416,15 @@ input:focus{border-color:rgba(124,58,237,0.5);}
   <div id="entries-list"><div class="empty">لم يتم إدخال أي دخل بعد</div></div>
   <button class="reset-btn" onclick="confirmResetMonth()">🗑️ حذف جميع بيانات الشهر</button>
   
-  <!-- Export Button -->
-  <button class="export-btn" onclick="exportData()">📥 تصدير البيانات (نسخة احتياطية)</button>
+  <!-- Backup Section -->
+  <div style="margin-top: 20px; padding: 15px; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius);">
+    <div style="font-size: 12px; font-weight: 700; color: var(--purple); margin-bottom: 10px; text-align: center;">💾 النسخ الاحتياطي والأمان</div>
+    <div style="display: flex; gap: 10px;">
+      <button class="export-btn" onclick="exportData()" style="margin-top: 0; flex: 1;">📥 تصدير</button>
+      <button class="export-btn" onclick="document.getElementById('import-file').click()" style="margin-top: 0; flex: 1; color: var(--blue); border-color: var(--blue);">📤 استيراد</button>
+    </div>
+    <input type="file" id="import-file" style="display: none;" accept=".json" onchange="importData(event)">
+  </div>
 </div>
 
 <!-- ══════════════ OBLIGATIONS TAB ══════════════ -->
@@ -934,6 +948,28 @@ function exportData() {
   a.click();
   document.body.removeChild(a);
   URL.revokeObjectURL(url);
+}
+
+// ── Import Data ──
+function importData(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    try {
+      const data = JSON.parse(e.target.result);
+      if (confirm('هل أنت متأكد من استيراد البيانات؟ سيتم استبدال البيانات الحالية.')) {
+        Object.keys(data).forEach(key => {
+          localStorage.setItem(key, data[key]);
+        });
+        alert('تم استيراد البيانات بنجاح! سيتم إعادة تحميل الصفحة.');
+        location.reload();
+      }
+    } catch (err) {
+      alert('خطأ في قراءة الملف. تأكد من أنه ملف نسخة احتياطية صحيح.');
+    }
+  };
+  reader.readAsText(file);
 }
 
 // ── PWA ──
