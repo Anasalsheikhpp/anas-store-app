@@ -2,18 +2,13 @@
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="المدير المالي">
-<meta name="theme-color" content="#7c3aed">
-<meta name="description" content="تطبيق ذكي لإدارة الدخل اليومي والتوزيع التلقائي للمصروفات والالتزامات">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<link rel="manifest" href="/anas-store-app/manifest.json">
-<link rel="icon" type="image/png" href="/anas-store-app/app_icon_192x192.png" sizes="192x192">
-<link rel="icon" type="image/png" href="/anas-store-app/app_icon_512x512.png" sizes="512x512">
-<link rel="apple-touch-icon" href="/anas-store-app/app_icon_192x192.png">
+<meta name="apple-mobile-web-app-title" content="مدير دخلي">
+<meta name="theme-color" content="#070b14">
+<link rel="manifest" href="manifest.json">
 <title>مدير دخلي الذكي</title>
 <style>
 :root {
@@ -31,8 +26,6 @@
   --text:      #e2e8f0;
   --muted:     #64748b;
   --radius:    16px;
-  --gold:      #fbbf24;
-  --gold-dim:  rgba(251,191,36,0.1);
 }
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
 body{
@@ -198,119 +191,132 @@ input:focus{border-color:rgba(124,58,237,0.5);}
 .pct-btn.active-red{background:var(--red-dim);border-color:var(--red);color:var(--red);}
 .pct-btn.active-pink{background:var(--pink-dim);border-color:var(--pink);color:var(--pink);}
 
-/* ── ENTRIES LIST ── */
-.entries-label{font-size:11px;font-weight:700;color:var(--muted);margin:18px 16px 10px;text-transform:uppercase;letter-spacing:0.5px;}
-.entry-item{
+/* ── ENTRIES ── */
+.entries-label{font-size:11px;color:var(--muted);margin-bottom:8px;}
+.entry-row{display:flex;justify-content:space-between;align-items:center;
   background:var(--surface);border:1px solid var(--border);border-radius:14px;
-  padding:14px 16px;margin-bottom:10px;display:flex;justify-content:space-between;align-items:center;
-  animation:slideIn 0.3s ease;
-}
-@keyframes slideIn{from{opacity:0;transform:translateX(10px);}to{opacity:1;transform:translateX(0);}}
-.entry-info .ei-date{font-size:12px;font-weight:700;margin-bottom:3px;}
-.entry-info .ei-sub{font-size:10px;color:var(--muted);}
-.entry-amt{text-align:left;}
-.entry-amt .ea-val{font-size:17px;font-weight:800;color:var(--green);}
-.entry-amt .ea-unit{font-size:9px;color:var(--muted);}
-.entry-actions{display:flex;gap:8px;margin-right:12px;}
-.entry-btn{background:rgba(255,255,255,0.05);border:none;color:var(--muted);width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:14px;cursor:pointer;}
-.entry-btn:active{background:rgba(255,255,255,0.1);}
+  padding:12px 14px;margin-bottom:8px;}
+.entry-date{font-size:12px;font-weight:700;}
+.entry-amt{font-size:16px;font-weight:800;color:var(--green);}
+.del-btn{background:none;border:none;color:var(--muted);font-size:14px;cursor:pointer;padding:4px;}
 
-.empty{text-align:center;padding:40px 20px;color:var(--muted);font-size:13px;}
-.reset-btn{width:calc(100% - 32px);margin:16px;padding:14px;border-radius:12px;border:1px solid rgba(248,113,113,0.2);background:rgba(248,113,113,0.05);color:var(--red);font-size:13px;font-weight:700;cursor:pointer;font-family:inherit;}
+/* ── OBLIGATIONS TAB ── */
+.mgr-btn{background:var(--surface);border:1px solid var(--border);color:var(--purple);border-radius:10px;padding:6px 12px;font-size:11px;font-weight:700;cursor:pointer;font-family:inherit;}
+.dist-table{background:rgba(255,255,255,0.03);border-radius:14px;border:1px solid var(--border);padding:14px;margin-bottom:16px;}
+.dist-title{font-size:11px;color:var(--muted);margin-bottom:10px;text-align:center;}
+.dist-row{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid rgba(255,255,255,0.04);font-size:13px;}
+.dist-row:last-child{border-bottom:none;}
+.dist-row.total{border-top:1px solid var(--border);margin-top:4px;padding-top:12px;font-weight:800;}
+.ob-card{background:var(--surface);border-radius:14px;padding:12px;margin-bottom:10px;border:1px solid var(--border);}
+.ob-hd{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;}
+.ob-name{display:flex;align-items:center;gap:8px;font-size:13px;font-weight:700;}
+.ob-amounts{font-size:12px;}
+.ob-bar-bg{height:6px;background:rgba(255,255,255,0.05);border-radius:99px;overflow:hidden;margin-bottom:6px;}
+.ob-bar-fill{height:100%;border-radius:99px;transition:width 0.4s ease;}
+.ob-ft{display:flex;justify-content:space-between;font-size:10px;color:var(--muted);}
 
-/* ── NAV BAR ── */
-.nav-bar{
-  position:fixed;bottom:0;left:0;right:0;height:70px;
-  background:rgba(13,19,33,0.85);backdrop-filter:blur(15px);
-  border-top:1px solid var(--border);display:flex;z-index:100;
-  padding-bottom:env(safe-area-inset-bottom);
-}
-.nav-item{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;color:var(--muted);font-size:10px;font-weight:600;cursor:pointer;}
-.nav-item.active{color:var(--purple);}
-.nav-item .ni-icon{font-size:20px;}
+/* ── REPORT TAB ── */
+.stats-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:16px;}
+.stat-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:14px;text-align:center;}
+.stat-icon{font-size:18px;margin-bottom:6px;}
+.stat-val{font-size:18px;font-weight:800;margin-bottom:2px;}
+.stat-label{font-size:10px;color:var(--muted);}
+.cal-wrap{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:14px;margin-bottom:16px;}
+.cal-title{font-size:12px;font-weight:700;margin-bottom:12px;text-align:center;}
+.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;}
+.cal-day-hd{text-align:center;font-size:9px;color:var(--muted);padding-bottom:4px;}
+.cal-cell{aspect-ratio:1;border-radius:8px;display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative;}
+.cal-cell .cn{font-size:11px;font-weight:700;}
+.cal-cell .ca{font-size:7px;color:var(--green);font-weight:800;margin-top:1px;}
+.detail-row{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:12px;margin-bottom:8px;}
+.detail-hd{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;}
+.detail-date{font-size:11px;color:var(--muted);font-weight:600;}
+.detail-amt{font-size:14px;font-weight:800;color:var(--green);}
+.detail-tags{display:flex;gap:5px;flex-wrap:wrap;}
+.tag{font-size:9px;padding:3px 8px;border-radius:6px;font-weight:700;}
+
+/* ── MONTHS TAB ── */
+.month-summary-card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:16px;margin-bottom:12px;}
+.ms-hd{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;}
+.ms-name{font-size:15px;font-weight:800;}
+.ms-income{font-size:16px;font-weight:800;color:var(--green);}
+.ms-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;}
+.ms-item{text-align:center;background:rgba(255,255,255,0.03);padding:8px;border-radius:10px;}
+.ms-val{font-size:13px;font-weight:800;display:block;}
+.ms-lbl{font-size:9px;color:var(--muted);}
+.year-divider{font-size:12px;font-weight:800;color:var(--purple);margin:20px 0 10px;text-align:center;display:flex;align-items:center;gap:10px;}
+.year-divider::before,.year-divider::after{content:'';flex:1;height:1px;background:var(--border);}
 
 /* ── MODALS ── */
-.modal-overlay{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.8);backdrop-filter:blur(4px);z-index:1000;display:none;align-items:center;justify-content:center;padding:20px;}
-.modal-overlay.show{display:flex;}
-.modal-card{background:var(--bg2);border:1px solid var(--border);border-radius:24px;width:100%;max-width:400px;padding:24px;position:relative;animation:modalIn 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);}
-@keyframes modalIn{from{opacity:0;transform:scale(0.9) translateY(20px);}to{opacity:1;transform:scale(1) translateY(0);}}
-.modal-close{position:absolute;top:16px;left:16px;background:var(--surface);border:none;color:var(--text);width:30px;height:30px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;}
-
-/* ── OBLIGATIONS MANAGER ── */
-.ob-mgr-hd{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;}
-.ob-mgr-title{font-size:18px;font-weight:800;}
-.ob-mgr-total{font-size:14px;color:var(--blue);font-weight:700;}
-.ob-item-row{display:flex;align-items:center;gap:12px;padding:12px;background:var(--surface);border-radius:14px;margin-bottom:8px;border:1px solid var(--border);}
-.ob-item-icon{width:36px;height:36px;background:var(--bg);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;}
-.ob-item-info{flex:1;}
-.ob-item-label{font-size:13px;font-weight:700;}
-.ob-item-amt{font-size:11px;color:var(--muted);margin-top:2px;}
-.ob-del-btn2{background:none;border:none;color:var(--red);font-size:16px;cursor:pointer;padding:8px;}
-.ob-edit-btn{background:none;border:none;color:var(--blue);font-size:16px;cursor:pointer;padding:8px;}
-
-.ob-form-card{background:rgba(255,255,255,0.03);border:1px dashed var(--border);border-radius:16px;padding:16px;margin-top:16px;}
-.ob-icon-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:8px;margin-bottom:12px;}
-.ob-icon-pick{aspect-ratio:1;background:var(--surface);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:18px;cursor:pointer;border:2px solid transparent;}
+#ob-mgr-modal{display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.8);z-index:1000;padding:20px;align-items:center;justify-content:center;}
+.ob-mgr-box{background:#0d1321;width:100%;max-width:400px;border-radius:24px;border:1px solid var(--border);padding:20px;max-height:90vh;overflow-y:auto;}
+.ob-mgr-title{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;font-weight:800;font-size:16px;}
+.ob-mgr-close{background:none;border:none;color:var(--muted);font-size:13px;cursor:pointer;}
+.ob-mgr-item{display:flex;justify-content:space-between;align-items:center;padding:10px;background:rgba(255,255,255,0.03);border-radius:12px;margin-bottom:8px;border:1px solid var(--border);}
+.ob-mgr-info{display:flex;align-items:center;gap:10px;}
+.ob-mgr-btns{display:flex;gap:8px;}
+.ob-mgr-btn{background:none;border:none;font-size:16px;cursor:pointer;padding:4px;}
+.ob-add-form{margin-top:20px;padding-top:20px;border-top:1px solid var(--border);}
+.form-title{font-size:12px;font-weight:700;color:var(--purple);margin-bottom:12px;}
+.ob-icons-row{display:flex;gap:8px;overflow-x:auto;padding-bottom:10px;margin-bottom:10px;}
+.ob-icon-pick{width:36px;height:36px;background:var(--surface);border-radius:10px;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;border:1px solid transparent;}
 .ob-icon-pick.selected{border-color:var(--purple);background:var(--purple-dim);}
+.ob-form-row{display:flex;gap:8px;margin-bottom:10px;}
+.ob-form-row input{margin-bottom:0;}
+.ob-save-btn{width:100%;padding:12px;border-radius:12px;border:none;background:var(--purple);color:#fff;font-weight:700;cursor:pointer;}
+.ob-total-row{background:var(--purple-dim);padding:12px;border-radius:12px;margin-bottom:16px;display:flex;justify-content:space-between;align-items:center;}
 
-/* ── TOAST ── */
-#toast{position:fixed;top:30px;left:50%;transform:translateX(-50%) translateY(-100px);background:rgba(13,19,33,0.9);border:1px solid var(--purple);padding:12px 20px;border-radius:99px;z-index:2000;display:flex;align-items:center;gap:10px;box-shadow:0 10px 30px rgba(0,0,0,0.5);transition:transform 0.4s cubic-bezier(0.18, 0.89, 0.32, 1.28);pointer-events:none;}
-#toast.show{transform:translateX(-50%) translateY(0);}
-#toast .t-icon{font-size:18px;}
-#toast .t-msg{font-size:13px;font-weight:700;color:#fff;}
+.modal-overlay{display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.85);z-index:2000;align-items:center;justify-content:center;padding:20px;}
+.modal-box{background:#1e1b4b;width:100%;max-width:320px;border-radius:24px;padding:24px;text-align:center;border:1px solid rgba(124,58,237,0.3);}
+.m-icon{font-size:40px;margin-bottom:16px;}
+.m-title{font-size:18px;font-weight:800;margin-bottom:8px;}
+.m-sub{font-size:13px;color:var(--muted);margin-bottom:24px;}
+.modal-btns{display:flex;gap:10px;}
+.modal-btns button{flex:1;padding:12px;border-radius:12px;border:none;font-family:inherit;font-weight:700;cursor:pointer;}
+.m-cancel{background:var(--surface);color:var(--text);}
+.m-confirm{background:var(--red);color:#fff;}
 
-/* ── OBLIGATIONS TABLE ── */
-.dist-table{background:var(--surface);border-radius:var(--radius);border:1px solid var(--border);overflow:hidden;margin-bottom:14px;}
-.dist-title{padding:12px 16px;font-size:11px;font-weight:700;color:var(--muted);background:rgba(255,255,255,0.02);border-bottom:1px solid var(--border);}
-.dist-row{display:flex;justify-content:space-between;padding:12px 16px;border-bottom:1px solid var(--border);}
-.dist-row:last-child{border-bottom:none;}
-.dist-row .dl{font-size:12px;color:#94a3b8;}
-.dist-row .dr{font-size:14px;font-weight:800;}
+.empty{text-align:center;padding:30px;color:var(--muted);font-size:12px;}
+.reset-btn{width:100%;background:none;border:1px solid rgba(248,113,113,0.2);color:var(--red);padding:12px;border-radius:12px;font-size:11px;font-weight:700;margin-top:10px;cursor:pointer;}
 
-.ob-list-item{display:flex;justify-content:space-between;align-items:center;padding:12px 16px;border-bottom:1px solid var(--border);}
-.ob-list-item:last-child{border-bottom:none;}
-.ob-li-left{display:flex;align-items:center;gap:10px;}
-.ob-li-icon{width:32px;height:32px;background:rgba(255,255,255,0.05);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:15px;}
-.ob-li-label{font-size:12px;font-weight:600;}
-.ob-li-amt{font-size:14px;font-weight:800;color:var(--blue);}
+/* ── UTILS ── */
+.hidden{display:none;}
 
-/* ── MONTHS GRID ── */
-.months-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;}
-.month-card{background:var(--surface);border:1px solid var(--border);border-radius:18px;padding:16px;cursor:pointer;transition:all 0.2s;}
-.month-card:active{transform:scale(0.97);background:rgba(255,255,255,0.08);}
-.month-card .mc-name{font-size:14px;font-weight:800;margin-bottom:10px;}
-.month-card .mc-stat{display:flex;justify-content:space-between;font-size:10px;margin-bottom:4px;}
-.month-card .mc-val{font-weight:700;}
-
-/* ── MGR BTN ── */
-.mgr-btn{padding:6px 12px;border-radius:8px;border:1px solid var(--border);background:var(--surface);color:var(--text);font-size:11px;font-weight:700;cursor:pointer;font-family:inherit;}
-
-/* ── EDIT DAY MODAL SPECIFIC ── */
-.edit-field{margin-bottom:14px;}
-.edit-field label{display:block;font-size:10px;color:var(--muted);margin-bottom:5px;font-weight:700;}
-.edit-field input{margin-bottom:0;padding:10px 12px;font-size:16px;font-weight:700;}
-.edit-total-box{background:rgba(255,255,255,0.03);border-radius:12px;padding:12px;margin-top:10px;display:flex;justify-content:space-between;align-items:center;}
-
+/* ── EXPORT BUTTON ── */
+.export-btn {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  color: var(--green);
+  padding: 8px 16px;
+  border-radius: 10px;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: inherit;
+  margin-top: 10px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
 </style>
 </head>
 <body>
 
-<div id="toast"><span class="t-icon"></span><span class="t-msg"></span></div>
-
-<!-- Install Banner (Android/Chrome) -->
+<!-- Install Banners -->
 <div id="install-banner">
-  <div class="ib-icon">📲</div>
+  <div class="ib-icon">📱</div>
   <div class="ib-text">
-    <div class="ib-title">تثبيت تطبيق المدير المالي</div>
-    <div class="ib-sub">للوصول السريع والعمل بدون إنترنت</div>
+    <div class="ib-title">تثبيت مدير دخلي</div>
+    <div class="ib-sub">أضف التطبيق لشاشتك للوصول السريع</div>
   </div>
-  <button class="ib-btn" onclick="installApp()">تثبيت</button>
-  <button class="ib-close" onclick="dismissInstall()">✕</button>
+  <button class="ib-btn" onclick="installPWA()">تثبيت</button>
+  <button class="ib-close" onclick="hideInstallBanner()">✕</button>
 </div>
 
-<!-- iOS Install Guide -->
 <div id="ios-guide">
-  <div class="ig-title">تثبيت التطبيق على آيفون</div>
+  <div class="ig-title">تثبيت التطبيق على iPhone</div>
   <div class="ig-step">
     <div class="ig-num">1</div>
     <div class="ig-txt">اضغط على زر <b>المشاركة</b> في أسفل المتصفح</div>
@@ -319,32 +325,32 @@ input:focus{border-color:rgba(124,58,237,0.5);}
     <div class="ig-num">2</div>
     <div class="ig-txt">اختر <b>"إضافة إلى الشاشة الرئيسية"</b></div>
   </div>
-  <button class="ig-close" onclick="document.getElementById('ios-guide').classList.remove('show')">فهمت</button>
+  <button class="ig-close" onclick="hideIOSGuide()">فهمت</button>
 </div>
 
 <div class="header">
   <h1>مدير دخلي <span>الذكي</span></h1>
   <div class="month-row">
-    <button class="month-nav-btn" onclick="changeMonth(-1)">‹</button>
-    <select id="month-select" onchange="onMonthSelectChange()"></select>
-    <button class="month-nav-btn" onclick="changeMonth(1)">›</button>
+    <button class="month-nav-btn" onclick="navMonth(-1)">‹</button>
+    <select id="month-select" onchange="changeMonth()"></select>
+    <button class="month-nav-btn" onclick="navMonth(1)">›</button>
   </div>
 </div>
 
 <!-- Summary Strip -->
 <div class="summary-strip">
   <div class="ss-cell">
-    <div class="ssl">📈 الدخل</div>
+    <div class="ssl">إجمالي الدخل</div>
     <div class="ssv" id="ss-income" style="color:var(--green)">0</div>
     <div class="sss">ريال</div>
   </div>
   <div class="ss-cell">
-    <div class="ssl">🛍️ مصروف</div>
-    <div class="ssv" id="ss-exp" style="color:var(--orange)">0</div>
+    <div class="ssl">الادخار</div>
+    <div class="ssv" id="ss-sav" style="color:var(--yellow)">0</div>
     <div class="sss">ريال</div>
   </div>
   <div class="ss-cell">
-    <div class="ssl">🚨 الطوارئ</div>
+    <div class="ssl">الطوارئ</div>
     <div class="ssv" id="ss-emg" style="color:var(--red)">0</div>
     <div class="sss">ريال</div>
   </div>
@@ -355,185 +361,63 @@ input:focus{border-color:rgba(124,58,237,0.5);}
   </div>
 </div>
 
-<!-- Progress bar -->
+<!-- Progress Bar -->
 <div class="ob-progress-wrap">
   <div class="ob-progress-hd">
-    <span>توزيع الدخل</span>
-    <span id="prog-pct" style="color:var(--yellow);font-weight:700">0%</span>
+    <span>تغطية الالتزامات والمصاريف</span>
+    <span id="prog-pct" style="font-weight:800">0%</span>
   </div>
-  <div class="prog-bar-multi" id="prog-multi">
-    <div class="prog-seg" id="seg-ob"   style="background:var(--blue);width:0%"></div>
-    <div class="prog-seg" id="seg-exp"  style="background:var(--orange);width:0%"></div>
-    <div class="prog-seg" id="seg-emg"  style="background:var(--red);width:0%"></div>
-    <div class="prog-seg" id="seg-sav"  style="background:var(--yellow);width:0%"></div>
-    <div class="prog-seg" id="seg-ent"  style="background:var(--pink);width:0%"></div>
-  </div>
-  <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:5px;">
-    <span style="font-size:9px;color:var(--blue)">● التزامات</span>
-    <span style="font-size:9px;color:var(--orange)">● مصروف</span>
-    <span style="font-size:9px;color:var(--red)">● طوارئ</span>
-    <span style="font-size:9px;color:var(--yellow)">● ادخار</span>
-    <span style="font-size:9px;color:var(--pink)">● ترفيه</span>
+  <div class="prog-bar-multi">
+    <div id="seg-ob"  class="prog-seg" style="background:var(--blue); width:0%"></div>
+    <div id="seg-exp" class="prog-seg" style="background:var(--orange);width:0%"></div>
+    <div id="seg-emg" class="prog-seg" style="background:var(--red);   width:0%"></div>
+    <div id="seg-sav" class="prog-seg" style="background:var(--yellow);width:0%"></div>
+    <div id="seg-ent" class="prog-seg" style="background:var(--pink);  width:0%"></div>
   </div>
 </div>
 
-<!-- TABS -->
+<!-- Tabs Navigation -->
 <div class="tabs">
-  <button class="tab-btn active" onclick="switchTab('daily',this)">📥 اليومي</button>
+  <button class="tab-btn active" onclick="switchTab('daily',this)">🏠 اليومي</button>
   <button class="tab-btn" onclick="switchTab('obligations',this)">📋 الالتزامات</button>
-  <button class="tab-btn" onclick="switchTab('report',this)">📊 التقرير</button>
-  <button class="tab-btn" onclick="switchTab('months',this)">🗓 الأشهر</button>
+  <button class="tab-btn" onclick="switchTab('report',this)">📊 التقارير</button>
+  <button class="tab-btn" onclick="switchTab('months',this)">🗓️ الشهور</button>
 </div>
 
 <!-- ══════════════ DAILY TAB ══════════════ -->
 <div class="tab-content active" id="tab-daily">
-
-  <!-- ── QUICK ENTRY (the hero) ── -->
+  
+  <!-- Quick Entry -->
   <div class="quick-entry-card">
-    <div style="text-align:center;margin-bottom:12px;">
-      <div class="qe-label" style="font-size:11px;color:var(--purple);font-weight:700;letter-spacing:0.3px;margin-bottom:4px;">💡 أدخل دخل اليوم وسنوزعه تلقائياً</div>
-      <div style="font-size:11px;color:var(--muted);" id="qe-date-label">—</div>
-    </div>
-
-    <!-- دخل اليوم -->
-    <div style="font-size:11px;color:var(--green);font-weight:700;margin-bottom:6px;">📈 دخل اليوم</div>
+    <div class="qe-label">إضافة دخل جديد</div>
+    <div class="qe-date" id="qe-date-label">...</div>
+    
     <div class="big-amount-wrap">
-      <input type="number" id="inp-amount" placeholder="0" inputmode="numeric">
       <span class="currency">ريال</span>
+      <input type="number" id="inp-amount" placeholder="0.00" inputmode="decimal">
     </div>
-
-    <!-- مصروف اليوم -->
-    <div style="font-size:11px;color:var(--orange);font-weight:700;margin-bottom:6px;">🛍️ مصروف اليوم</div>
-    <div style="position:relative;margin-bottom:14px;">
-      <input type="number" id="inp-daily-exp-main" placeholder="0" inputmode="numeric"
-        style="width:100%;padding:13px 50px 13px 14px;border-radius:12px;border:1.5px solid rgba(251,146,60,0.3);background:rgba(251,146,60,0.07);color:var(--text);font-size:18px;font-weight:700;outline:none;font-family:inherit;direction:rtl;text-align:right;transition:border-color 0.2s;"
-        onfocus="this.style.borderColor='rgba(251,146,60,0.6)'" onblur="this.style.borderColor='rgba(251,146,60,0.3)';saveDailyExpInline()">
-      <span style="position:absolute;left:14px;top:50%;transform:translateY(-50%);font-size:12px;color:var(--muted);font-weight:600;">ريال</span>
-    </div>
-
-    <input type="date" id="inp-date" style="margin-bottom:14px;" onchange="renderSuggest()">
-
-    <button class="save-btn" id="save-btn" onclick="handleSave()">💾 حفظ وتوزيع تلقائي</button>
+    
+    <input type="text" id="inp-note" placeholder="ملاحظة (اختياري)">
+    <button class="save-btn" id="btn-save" onclick="saveEntry()">💾 حفظ الدخل</button>
   </div>
 
-  <!-- ── SUGGESTED TOMORROW CARD ── -->
-  <div id="suggest-card" style="background:linear-gradient(135deg,rgba(96,165,250,0.1),rgba(79,70,229,0.08));border:1px solid rgba(96,165,250,0.25);border-radius:16px;padding:14px 16px;margin-bottom:14px;">
-    <div style="display:flex;justify-content:space-between;align-items:center;">
-      <div>
-        <div style="font-size:10px;color:var(--blue);font-weight:700;letter-spacing:0.3px;margin-bottom:2px;">🎯 المقترح لبكرة</div>
-        <div style="font-size:10px;color:var(--muted);" id="suggest-sub-label">لتغطية الالتزامات + المصروف</div>
-      </div>
-      <div style="text-align:left;">
-        <div style="font-size:26px;font-weight:800;color:var(--blue);direction:ltr;" id="suggest-val">—</div>
-        <div style="font-size:9px;color:var(--muted);text-align:center;margin-top:1px;">ريال</div>
-      </div>
-    </div>
-    <div style="margin-top:10px;display:flex;gap:6px;flex-wrap:wrap;" id="suggest-breakdown"></div>
-  </div>
-
-  <!-- ── RESULT SUMMARY (hidden until save) ── -->
-  <div id="result-section" style="display:none;">
-    <div class="result-card" id="result-card">
-      <div class="result-header">
-        <div class="rh-title">✅ تم التوزيع التلقائي</div>
-        <div class="rh-amount"><span id="res-income">0</span> ريال</div>
-      </div>
-      <!-- obligations row -->
-      <div class="result-row" id="res-ob-row">
-        <div class="rr-left">
-          <div class="rr-icon" style="background:var(--blue-dim);">📋</div>
-          <div>
-            <div class="rr-label">الالتزامات (حصتك اليوم)</div>
-            <div class="rr-note" id="res-ob-note">—</div>
-          </div>
-        </div>
-        <div>
-          <div class="rr-amount" style="color:var(--blue);" id="res-ob">0</div>
-        </div>
-      </div>
-      <!-- daily expense row -->
-      <div class="result-row" id="res-exp-row">
-        <div class="rr-left">
-          <div class="rr-icon" style="background:var(--orange-dim);">🛍️</div>
-          <div>
-            <div class="rr-label">المصروف اليومي</div>
-            <div class="rr-note" id="res-exp-note">—</div>
-          </div>
-        </div>
-        <div>
-          <div class="rr-amount" style="color:var(--orange);" id="res-exp">0</div>
-        </div>
-      </div>
-      <!-- emergency row -->
-      <div class="result-row" id="res-emg-row">
-        <div class="rr-left">
-          <div class="rr-icon" style="background:var(--red-dim);">🚨</div>
-          <div>
-            <div class="rr-label">الطوارئ</div>
-            <div class="rr-note" id="res-emg-note">—</div>
-          </div>
-        </div>
-        <div>
-          <div class="rr-amount" style="color:var(--red);" id="res-emg">0</div>
-        </div>
-      </div>
-      <!-- savings row -->
-      <div class="result-row" id="res-sav-row">
-        <div class="rr-left">
-          <div class="rr-icon" style="background:var(--yellow-dim);">🏦</div>
-          <div>
-            <div class="rr-label">الادخار</div>
-            <div class="rr-note" id="res-sav-note">—</div>
-          </div>
-        </div>
-        <div>
-          <div class="rr-amount" style="color:var(--yellow);" id="res-sav">0</div>
-        </div>
-      </div>
-      <!-- entertainment row -->
-      <div class="result-row" id="res-ent-row" style="display:none;">
-        <div class="rr-left">
-          <div class="rr-icon" style="background:var(--pink-dim);">🎉</div>
-          <div>
-            <div class="rr-label">ترفيه / كماليات</div>
-            <div class="rr-note" id="res-ent-note">—</div>
-          </div>
-        </div>
-        <div>
-          <div class="rr-amount" style="color:var(--pink);" id="res-ent">0</div>
-        </div>
-      </div>
-      <!-- low income warning -->
-      <div id="res-low-banner" style="display:none;" class="low-income-banner">
-        ⚠️ الدخل منخفض — تم التركيز على الالتزامات والمصروف فقط
-      </div>
-    </div>
-  </div>
-
-  <!-- Insights -->
-  <div id="insights-section" style="margin-bottom:14px;display:none;">
-    <div class="entries-label">📊 أين ذهب دخلي؟ (تراكمي)</div>
-    <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:12px;display:grid;grid-template-columns:repeat(3,1fr);gap:8px;">
-      <div style="text-align:center;"><div style="font-size:10px;color:var(--blue);">التزامات</div><div id="ins-ob" style="font-size:13px;font-weight:700;">0%</div></div>
-      <div style="text-align:center;"><div style="font-size:10px;color:var(--orange);">مصروف</div><div id="ins-exp" style="font-size:13px;font-weight:700;">0%</div></div>
-      <div style="text-align:center;"><div style="font-size:10px;color:var(--yellow);">ادخار</div><div id="ins-sav" style="font-size:13px;font-weight:700;">0%</div></div>
-    </div>
-  </div>
+  <!-- Last Result (Dynamic) -->
+  <div id="last-result-container"></div>
 
   <!-- Entries -->
   <div class="entries-label">📅 آخر المدخلات</div>
   <div id="entries-list"><div class="empty">لم يتم إدخال أي دخل بعد</div></div>
   <button class="reset-btn" onclick="confirmResetMonth()">🗑️ حذف جميع بيانات الشهر</button>
+  
+  <!-- Export Button -->
+  <button class="export-btn" onclick="exportData()">📥 تصدير البيانات (نسخة احتياطية)</button>
 </div>
 
 <!-- ══════════════ OBLIGATIONS TAB ══════════════ -->
 <div class="tab-content" id="tab-obligations">
   <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
     <span style="font-size:13px;font-weight:700;color:var(--purple);">📋 الالتزامات الشهرية</span>
-    <div style="display:flex;gap:8px;">
-      <button class="mgr-btn" onclick="exportData()" style="background:var(--blue-dim);color:var(--blue);border-color:var(--blue);">📥 تصدير</button>
-      <button class="mgr-btn" onclick="openObMgr()">⚙️ إدارة</button>
-    </div>
+    <button class="mgr-btn" onclick="openObMgr()">⚙️ إدارة</button>
   </div>
   <div class="dist-table">
     <div class="dist-title">توزيع الدخل الكلي</div>
@@ -541,898 +425,539 @@ input:focus{border-color:rgba(124,58,237,0.5);}
     <div class="dist-row"><span class="dl">📋 التزامات (حصة مجمعة)</span><span class="dr" id="dt-ob" style="color:var(--blue)">0</span></div>
     <div class="dist-row"><span class="dl">🛍️ مصاريف يومية</span><span class="dr" id="dt-daily" style="color:var(--orange)">0</span></div>
     <div class="dist-row"><span class="dl">🚨 الطوارئ</span><span class="dr" id="dt-emg" style="color:var(--red)">0</span></div>
-    <div class="dist-row"><span class="dl">🏦 الادخار</span><span class="dr" id="dt-sav" style="color:var(--yellow)">0</span></div>
-    <div class="dist-row"><span class="dl">🎉 ترفيه / كماليات</span><span class="dr" id="dt-ent" style="color:var(--pink)">0</span></div>
+    <div class="dist-row total"><span class="dl">🏦 الادخار</span><span class="dr" id="dt-sav" style="color:var(--yellow)">0</span></div>
+    <div class="dist-row" id="dt-ent-row"><span class="dl">🎉 الترفيه</span><span class="dr" id="dt-ent" style="color:var(--pink)">0</span></div>
   </div>
-
-  <div class="entries-label">تفاصيل الالتزامات</div>
-  <div class="dist-table" id="ob-list-container"></div>
-
-  <!-- Settings -->
-  <div class="entries-label">⚙️ الإعدادات الذكية</div>
-  <div class="settings-section">
-    <div class="settings-title">🛍️ المصروف اليومي المستهدف</div>
-    <div class="settings-row">
-      <input type="number" id="inp-daily-exp" placeholder="مثلاً: 50" inputmode="numeric">
-      <button onclick="saveDailyExp()" style="background:var(--orange-dim);color:var(--orange);">حفظ</button>
-    </div>
-    <div style="font-size:10px;color:var(--muted);margin-top:-5px;">هذا المبلغ الذي تحاول الالتزام به يومياً.</div>
-  </div>
-
-  <div class="settings-section">
-    <div class="settings-title">🚨 نسبة الطوارئ</div>
-    <div class="pct-row" id="emg-pct-btns">
-      <button class="pct-btn" onclick="setPct('emg',5,this)">5%</button>
-      <button class="pct-btn" onclick="setPct('emg',10,this)">10%</button>
-      <button class="pct-btn" onclick="setPct('emg',15,this)">15%</button>
-      <button class="pct-btn" onclick="setPct('emg',20,this)">20%</button>
-      <button class="pct-btn" onclick="setPct('emg',25,this)">25%</button>
-    </div>
-    <div class="settings-title">🎉 نسبة الترفيه (من الفائض)</div>
-    <div class="pct-row" id="ent-pct-btns">
-      <button class="pct-btn" onclick="setPct('ent',0,this)">0%</button>
-      <button class="pct-btn" onclick="setPct('ent',10,this)">10%</button>
-      <button class="pct-btn" onclick="setPct('ent',20,this)">20%</button>
-      <button class="pct-btn" onclick="setPct('ent',30,this)">30%</button>
-      <button class="pct-btn" onclick="setPct('ent',50,this)">50%</button>
-    </div>
-  </div>
-
-  <!-- Backup Section -->
-  <div class="entries-label">💾 النسخ الاحتياطي والأمان</div>
-  <div class="settings-section">
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
-      <button onclick="exportData()" style="padding:14px;border-radius:12px;border:none;background:var(--blue-dim);color:var(--blue);font-weight:700;font-family:inherit;cursor:pointer;">📥 تصدير البيانات</button>
-      <button onclick="document.getElementById('import-file').click()" style="padding:14px;border-radius:12px;border:none;background:var(--green-dim);color:var(--green);font-weight:700;font-family:inherit;cursor:pointer;">📤 استيراد البيانات</button>
-    </div>
-    <input type="file" id="import-file" style="display:none" accept=".json" onchange="importData(event)">
-    <div style="font-size:10px;color:var(--muted);margin-top:10px;text-align:center;">بياناتك محفوظة على جهازك فقط. استخدم التصدير لحفظ نسخة احتياطية.</div>
-  </div>
+  <div id="ob-list"></div>
 </div>
 
 <!-- ══════════════ REPORT TAB ══════════════ -->
 <div class="tab-content" id="tab-report">
-  <div id="report-container"></div>
+  <!-- Settings -->
+  <div class="settings-section">
+    <div class="settings-title">⚙️ إعدادات التوزيع التلقائي</div>
+
+    <div style="font-size:11px;color:var(--orange);font-weight:600;margin-bottom:6px;">🛍️ المصروف اليومي الثابت</div>
+    <div class="settings-row">
+      <input type="number" id="inp-daily-exp" placeholder="مثال: 150 ريال">
+      <button onclick="saveDailyExp()" style="background:linear-gradient(135deg,#fb923c,#f97316);color:#fff;">حفظ</button>
+    </div>
+
+    <div style="font-size:11px;color:var(--red);font-weight:600;margin-bottom:6px;margin-top:4px;">🚨 نسبة الطوارئ من المتبقي</div>
+    <div class="pct-row" id="emg-pct-btns">
+      <button class="pct-btn" onclick="selectEmgPct(this,10)">10%</button>
+      <button class="pct-btn" onclick="selectEmgPct(this,15)">15%</button>
+      <button class="pct-btn active-red" onclick="selectEmgPct(this,20)">20%</button>
+      <button class="pct-btn" onclick="selectEmgPct(this,25)">25%</button>
+      <button class="pct-btn" onclick="selectEmgPct(this,30)">30%</button>
+    </div>
+
+    <div style="font-size:11px;color:var(--pink);font-weight:600;margin-bottom:6px;margin-top:4px;">🎉 نسبة الترفيه من الفائض</div>
+    <div class="pct-row" id="ent-pct-btns">
+      <button class="pct-btn" onclick="selectEntPct(this,10)">10%</button>
+      <button class="pct-btn active-pink" onclick="selectEntPct(this,20)">20%</button>
+      <button class="pct-btn" onclick="selectEntPct(this,30)">30%</button>
+      <button class="pct-btn" onclick="selectEntPct(this,50)">50%</button>
+    </div>
+  </div>
+
+  <!-- Stats Grid -->
+  <div class="stats-grid">
+    <div class="stat-card"><div class="stat-icon">📅</div><div class="stat-val" id="st-days" style="color:var(--purple)">0</div><div class="stat-label">أيام مسجّلة</div></div>
+    <div class="stat-card"><div class="stat-icon">📊</div><div class="stat-val" id="st-avg" style="color:var(--green)">0</div><div class="stat-label">متوسط الدخل</div></div>
+    <div class="stat-card"><div class="stat-icon">🏦</div><div class="stat-val" id="st-sav" style="color:var(--yellow)">0</div><div class="stat-label">إجمالي الادخار</div></div>
+    <div class="stat-card"><div class="stat-icon">🚨</div><div class="stat-val" id="st-emg" style="color:var(--red)">0</div><div class="stat-label">إجمالي الطوارئ</div></div>
+    <div class="stat-card"><div class="stat-icon">🎯</div><div class="stat-val" id="st-prog" style="color:var(--blue)">0%</div><div class="stat-label">إنجاز الالتزامات</div></div>
+    <div class="stat-card"><div class="stat-icon" id="st-rem-icon">⏳</div><div class="stat-val" id="st-rem" style="color:var(--red)">0</div><div class="stat-label" id="st-rem-label">المتبقي</div></div>
+  </div>
+
+  <!-- Calendar -->
+  <div class="cal-wrap">
+    <div class="cal-title">📅 تقويم الشهر</div>
+    <div class="cal-grid" id="cal-grid"></div>
+  </div>
+  <div style="font-size:12px;font-weight:700;margin-bottom:8px;">📋 تفاصيل اليومي</div>
+  <div id="detail-list"><div class="empty">لا توجد بيانات لهذا الشهر</div></div>
 </div>
 
 <!-- ══════════════ MONTHS TAB ══════════════ -->
 <div class="tab-content" id="tab-months">
-  <div class="months-grid" id="months-grid"></div>
+  <div id="months-summary-list"><div class="empty">جاري التحميل...</div></div>
 </div>
-
-<!-- ══════════════ MODALS ══════════════ -->
 
 <!-- Obligations Manager Modal -->
-<div class="modal-overlay" id="ob-mgr-modal">
-  <div class="modal-card">
-    <button class="modal-close" onclick="closeObMgr()">✕</button>
-    <div class="ob-mgr-hd">
-      <div class="ob-mgr-title">إدارة الالتزامات</div>
-      <div class="ob-mgr-total" id="ob-mgr-total">0 ريال</div>
+<div id="ob-mgr-modal">
+  <div class="ob-mgr-box">
+    <div class="ob-mgr-title">
+      <span>⚙️ إدارة الالتزامات</span>
+      <button class="ob-mgr-close" onclick="closeObMgr()">✕ إغلاق</button>
     </div>
-    
-    <div id="ob-mgr-list" style="max-height:250px;overflow-y:auto;margin-bottom:16px;"></div>
-
-    <div class="ob-form-card">
-      <div id="ob-form-title" style="font-size:13px;font-weight:800;margin-bottom:12px;">➕ إضافة التزام جديد</div>
-      <input type="hidden" id="ob-edit-id">
-      <input type="text" id="ob-inp-label" placeholder="اسم الالتزام (مثلاً: إيجار)">
-      <input type="number" id="ob-inp-amount" placeholder="المبلغ الشهري" inputmode="numeric">
-      
-      <div style="font-size:10px;color:var(--muted);margin-bottom:8px;">اختر أيقونة:</div>
-      <div class="ob-icon-grid">
-        <div class="ob-icon-pick selected" onclick="pickIcon(this,'🏠')">🏠</div>
-        <div class="ob-icon-pick" onclick="pickIcon(this,'🚗')">🚗</div>
-        <div class="ob-icon-pick" onclick="pickIcon(this,'📱')">📱</div>
-        <div class="ob-icon-pick" onclick="pickIcon(this,'⚡')">⚡</div>
-        <div class="ob-icon-pick" onclick="pickIcon(this,'📶')">📶</div>
-        <div class="ob-icon-pick" onclick="pickIcon(this,'💳')">💳</div>
-        <div class="ob-icon-pick" onclick="pickIcon(this,'🏥')">🏥</div>
-        <div class="ob-icon-pick" onclick="pickIcon(this,'🎓')">🎓</div>
-        <div class="ob-icon-pick" onclick="pickIcon(this,'🛒')">🛒</div>
-        <div class="ob-icon-pick" onclick="pickIcon(this,'🛡️')">🛡️</div>
-        <div class="ob-icon-pick" onclick="pickIcon(this,'🎁')">🎁</div>
-        <div class="ob-icon-pick" onclick="pickIcon(this,'💰')">💰</div>
+    <div class="ob-total-row">
+      <span style="font-size:12px;color:var(--purple);">إجمالي الالتزامات</span>
+      <span style="font-size:16px;font-weight:800;color:#c4b5fd;" id="ob-mgr-total">0 ريال</span>
+    </div>
+    <div id="ob-mgr-list"></div>
+    <div class="ob-add-form">
+      <div class="form-title" id="ob-form-title">➕ إضافة التزام جديد</div>
+      <div class="ob-icons-row">
+        <span class="ob-icon-pick selected" onclick="pickIcon(this,'🏠')">🏠</span>
+        <span class="ob-icon-pick" onclick="pickIcon(this,'🚗')">🚗</span>
+        <span class="ob-icon-pick" onclick="pickIcon(this,'🏢')">🏢</span>
+        <span class="ob-icon-pick" onclick="pickIcon(this,'📡')">📡</span>
+        <span class="ob-icon-pick" onclick="pickIcon(this,'📱')">📱</span>
+        <span class="ob-icon-pick" onclick="pickIcon(this,'⚡')">⚡</span>
+        <span class="ob-icon-pick" onclick="pickIcon(this,'🛒')">🛒</span>
+        <span class="ob-icon-pick" onclick="pickIcon(this,'💊')">💊</span>
+        <span class="ob-icon-pick" onclick="pickIcon(this,'🎓')">🎓</span>
+        <span class="ob-icon-pick" onclick="pickIcon(this,'💰')">💰</span>
+        <span class="ob-icon-pick" onclick="pickIcon(this,'🔧')">🔧</span>
+        <span class="ob-icon-pick" onclick="pickIcon(this,'📺')">📺</span>
       </div>
-
-      <button class="save-btn" onclick="saveObligationForm()" style="padding:12px;font-size:14px;">حفظ الالتزام</button>
+      <div class="ob-form-row">
+        <input type="text" id="ob-inp-label" placeholder="اسم الالتزام">
+        <input type="number" id="ob-inp-amount" placeholder="المبلغ">
+      </div>
+      <input type="hidden" id="ob-edit-id" value="">
+      <button class="ob-save-btn" onclick="saveObligationForm()">💾 حفظ</button>
     </div>
   </div>
 </div>
 
-<!-- Edit Day Modal -->
-<div class="modal-overlay" id="edit-day-modal">
-  <div class="modal-card">
-    <button class="modal-close" onclick="closeEditDayModal()">✕</button>
-    <div style="text-align:center;margin-bottom:20px;">
-      <div id="edit-day-date-label" style="font-size:12px;color:var(--muted);margin-bottom:4px;">—</div>
-      <div id="edit-day-total-val" style="font-size:24px;font-weight:800;color:var(--green);">0 ريال</div>
-    </div>
-
-    <div class="edit-field">
-      <label>📈 إجمالي الدخل</label>
-      <input type="number" id="edit-income-val" oninput="onEditIncomeChange()" inputmode="numeric">
-    </div>
-
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
-      <div class="edit-field"><label>📋 التزامات</label><input type="number" id="edit-ob-val" oninput="updateEditTotal()" inputmode="numeric"></div>
-      <div class="edit-field"><label>🛍️ مصروف</label><input type="number" id="edit-exp-val" oninput="updateEditTotal()" inputmode="numeric"></div>
-      <div class="edit-field"><label>🚨 طوارئ</label><input type="number" id="edit-emg-val" oninput="updateEditTotal()" inputmode="numeric"></div>
-      <div class="edit-field"><label>🏦 ادخار</label><input type="number" id="edit-sav-val" oninput="updateEditTotal()" inputmode="numeric"></div>
-    </div>
-    <div class="edit-field"><label>🎉 ترفيه</label><input type="number" id="edit-ent-val" oninput="updateEditTotal()" inputmode="numeric"></div>
-
-    <div class="edit-total-box">
-      <span style="font-size:11px;color:var(--muted);">المجموع الموزع:</span>
-      <span id="edit-sum-check" style="font-size:15px;font-weight:800;">0 ريال</span>
-    </div>
-
-    <div style="display:flex;gap:10px;margin-top:20px;">
-      <button class="mgr-btn" onclick="applyAutoSplitEdit()" style="flex:1;padding:14px;background:var(--surface);border-color:var(--purple);color:var(--purple);">توزيع تلقائي</button>
-      <button class="save-btn" onclick="saveEditDay()" style="flex:1.5;margin-bottom:0;">حفظ التعديلات</button>
-    </div>
-  </div>
-</div>
-
-<!-- Delete Confirmation Modal -->
+<!-- Delete Modal -->
 <div class="modal-overlay" id="del-modal">
-  <div class="modal-card" style="text-align:center;padding:30px 24px;">
-    <div style="font-size:40px;margin-bottom:16px;">⚠️</div>
-    <div id="del-modal-title" style="font-size:17px;font-weight:800;margin-bottom:8px;">حذف البيانات؟</div>
-    <div id="del-modal-sub" style="font-size:13px;color:var(--muted);margin-bottom:24px;">لا يمكن التراجع عن هذه الخطوة.</div>
-    <div style="display:flex;gap:12px;">
-      <button class="mgr-btn" onclick="closeDelModal()" style="flex:1;padding:14px;font-size:14px;">إلغاء</button>
-      <button class="save-btn" id="del-modal-confirm" style="flex:1;background:var(--red);box-shadow:0 4px 15px rgba(248,113,113,0.3);font-size:14px;">تأكيد الحذف</button>
+  <div class="modal-box">
+    <div class="m-icon">🗑️</div>
+    <div class="m-title" id="del-modal-title">حذف الإدخال؟</div>
+    <div class="m-sub" id="del-modal-sub">هذا الإجراء لا يمكن التراجع عنه</div>
+    <div class="modal-btns">
+      <button class="m-cancel" onclick="closeDelModal()">إلغاء</button>
+      <button class="m-confirm" id="del-modal-confirm">حذف</button>
     </div>
-  </div>
-</div>
-
-<!-- Nav Bar -->
-<div class="nav-bar">
-  <div class="nav-item active" onclick="switchTab('daily',this)">
-    <div class="ni-icon">📥</div><div>اليومي</div>
-  </div>
-  <div class="nav-item" onclick="switchTab('obligations',this)">
-    <div class="ni-icon">📋</div><div>الالتزامات</div>
-  </div>
-  <div class="nav-item" onclick="switchTab('report',this)">
-    <div class="ni-icon">📊</div><div>التقرير</div>
-  </div>
-  <div class="nav-item" onclick="switchTab('months',this)">
-    <div class="ni-icon">🗓</div><div>الأشهر</div>
   </div>
 </div>
 
 <script>
 // ════════════════════════════════════════
-//  CORE DATA & STORAGE
+//  CONSTANTS & DEFAULTS
 // ════════════════════════════════════════
-const STORAGE_PREFIX = 'income_smart_v1_';
-const SETTINGS_KEY = 'income_smart_settings';
-const OB_KEY = 'income_smart_obligations';
+const ARABIC_MONTHS=['يناير','فبراير','مارس','أبريل','مايو','يونيو','يوليو','أغسطس','سبتمبر','أكتوبر','نوفمبر','ديسمبر'];
 
-let SETTINGS = JSON.parse(localStorage.getItem(SETTINGS_KEY)) || {
-  dailyExp: 50,
-  emgPct: 10,
-  entPct: 20
-};
-
-let OBLIGATIONS = JSON.parse(localStorage.getItem(OB_KEY)) || [
-  {id:'ob1', label:'إيجار', amount:2000, icon:'🏠'},
-  {id:'ob2', label:'فواتير', amount:500, icon:'⚡'},
-  {id:'ob3', label:'إنترنت', amount:250, icon:'📶'}
+const DEFAULT_OBLIGATIONS=[
+  {id:"driver",   label:"السواق",      amount:500,  icon:"🚗"},
+  {id:"maid",     label:"الشغالة",     amount:700,  icon:"🏠"},
+  {id:"rent",     label:"الإيجار",     amount:2000, icon:"🏢"},
+  {id:"net",      label:"النت",        amount:280,  icon:"📡"},
+  {id:"mobile",   label:"نت الجوال",   amount:180,  icon:"📱"},
+  {id:"electric", label:"الكهرباء",    amount:500,  icon:"⚡"},
+  {id:"groceries",label:"مقاضي البيت", amount:800,  icon:"🛒"},
 ];
 
-const now = new Date();
-let activeYear = now.getFullYear();
-let activeMonth = now.getMonth() + 1;
-const TODAY_STR = now.toISOString().split('T')[0];
-
-let data = loadData();
-
-function loadData() {
-  const key = `${STORAGE_PREFIX}${activeYear}_${activeMonth}`;
-  return JSON.parse(localStorage.getItem(key)) || { days: {} };
+// ── Load / save obligations ──
+function loadObligations(){
+  try{const r=localStorage.getItem('obligations_v1');if(r){const p=JSON.parse(r);if(Array.isArray(p)&&p.length)return p;}}catch(e){}
+  return JSON.parse(JSON.stringify(DEFAULT_OBLIGATIONS));
 }
-function saveStorage(d) {
-  const key = `${STORAGE_PREFIX}${activeYear}_${activeMonth}`;
-  localStorage.setItem(key, JSON.stringify(d));
+function saveObligations(){
+  localStorage.setItem('obligations_v1',JSON.stringify(OBLIGATIONS));
+  TOTAL_OB=OBLIGATIONS.reduce((s,o)=>s+o.amount,0);
 }
-function saveSettings() { localStorage.setItem(SETTINGS_KEY, JSON.stringify(SETTINGS)); }
-function saveObligations() { localStorage.setItem(OB_KEY, JSON.stringify(OBLIGATIONS)); }
+let OBLIGATIONS=loadObligations();
+let TOTAL_OB=OBLIGATIONS.reduce((s,o)=>s+o.amount,0);
+let selectedObIcon='🏠';
+
+// ── Load / save settings ──
+function loadSettings(){
+  try{const r=localStorage.getItem('smart_settings_v1');if(r)return JSON.parse(r);}catch(e){}
+  return {dailyExp:150, emgPct:20, entPct:20};
+}
+function saveSettings(){localStorage.setItem('smart_settings_v1',JSON.stringify(SETTINGS));}
+let SETTINGS=loadSettings();
+
+// ── Date helpers ──
+function getTodayStr(){const d=new Date();return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;}
+let TODAY_STR=getTodayStr();
+let TODAY=new Date(TODAY_STR+'T00:00:00');
+let activeYear=TODAY.getFullYear();
+let activeMonth=TODAY.getMonth();
+
+// ── Storage Key ──
+function getStorageKey(y,m){return `smart_data_${y}_${String(m+1).padStart(2,'0')}`;}
+
+// ── Load / save data ──
+function loadData(y,m){
+  const key=getStorageKey(y,m);
+  try{const r=localStorage.getItem(key);if(r)return JSON.parse(r);}catch(e){}
+  return {days:{}};
+}
+function saveData(y,m,d){localStorage.setItem(getStorageKey(y,m),JSON.stringify(d));}
 
 // ════════════════════════════════════════
-//  HELPERS
+//  CORE LOGIC
 // ════════════════════════════════════════
-const fmt = (n) => new Intl.NumberFormat('en-US').format(Math.round(n));
-const showToast = (msg, icon) => {
-  const t = document.getElementById('toast');
-  t.querySelector('.t-icon').textContent = icon;
-  t.querySelector('.t-msg').textContent = msg;
-  t.classList.add('show');
-  setTimeout(() => t.classList.remove('show'), 2500);
-};
+function compute(){
+  const data=loadData(activeYear,activeMonth);
+  const YEAR=activeYear, MONTH=activeMonth;
+  const DAYS_IN_MONTH=new Date(YEAR,MONTH+1,0).getDate();
+  
+  let totalIncome=0, totalOb=0, totalExp=0, totalEmg=0, totalSav=0, totalEnt=0, daysRec=0;
+  Object.values(data.days).forEach(v=>{
+    totalIncome+=v.income||0;
+    totalOb+=v.obShare||0;
+    totalExp+=v.expense||0;
+    totalEmg+=v.emergency||0;
+    totalSav+=v.savings||0;
+    totalEnt+=v.entertainment||0;
+    daysRec++;
+  });
 
-// ════════════════════════════════════════
-//  LOGIC: SMART SPLIT
-// ════════════════════════════════════════
-function smartSplit(income) {
-  const daysInMonth = new Date(activeYear, activeMonth, 0).getDate();
-  const totalOb = OBLIGATIONS.reduce((s, o) => s + o.amount, 0);
-  const dailyObShare = totalOb / daysInMonth;
-  const dailyExp = SETTINGS.dailyExp;
+  const obProgress=Math.min(totalOb/TOTAL_OB,1);
+  const obRemaining=Math.max(TOTAL_OB-totalOb,0);
+  const obSurplus=Math.max(totalOb-TOTAL_OB,0);
 
-  let obShare = 0, expense = 0, emergency = 0, savings = 0, entertainment = 0;
+  return {totalIncome,totalOb,totalExp,totalEmg,totalSav,totalEnt,daysRec,obProgress,obRemaining,obSurplus,YEAR,MONTH,DAYS_IN_MONTH};
+}
 
-  if (income >= (dailyObShare + dailyExp)) {
-    obShare = dailyObShare;
-    expense = dailyExp;
-    let surplus = income - obShare - expense;
-    emergency = surplus * (SETTINGS.emgPct / 100);
-    surplus -= emergency;
-    entertainment = surplus * (SETTINGS.entPct / 100);
-    savings = surplus - entertainment;
+function fmt(n){return Math.round(n).toLocaleString('en-US');}
+
+function render(){
+  const data=loadData(activeYear,activeMonth);
+  const c=compute();
+
+  // Summary strip
+  document.getElementById('ss-income').textContent=fmt(c.totalIncome);
+  document.getElementById('ss-sav').textContent=fmt(c.totalSav);
+  document.getElementById('ss-emg').textContent=fmt(c.totalEmg);
+  if(c.obSurplus>0){
+    document.getElementById('ss-rem-label').textContent='🎉 فائض';
+    document.getElementById('ss-rem').style.color='var(--green)';
+    document.getElementById('ss-rem').textContent=fmt(c.obSurplus);
   } else {
-    // Low income mode: prioritize obligations then expense
-    if (income >= dailyObShare) {
-      obShare = dailyObShare;
-      expense = income - obShare;
-    } else {
-      obShare = income;
-    }
-  }
-  return { obShare, expense, emergency, savings, entertainment };
-}
-
-// ════════════════════════════════════════
-//  UI ACTIONS
-// ════════════════════════════════════════
-function switchTab(id, btn) {
-  document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
-  document.querySelectorAll('.tab-btn, .nav-item').forEach(b => b.classList.remove('active'));
-  document.getElementById('tab-' + id).classList.add('active');
-  
-  // Update both top tabs and bottom nav
-  const tabBtns = document.querySelectorAll('.tab-btn');
-  const navItems = document.querySelectorAll('.nav-item');
-  const idx = ['daily','obligations','report','months'].indexOf(id);
-  if(tabBtns[idx]) tabBtns[idx].classList.add('active');
-  if(navItems[idx]) navItems[idx].classList.add('active');
-
-  if(id==='report') renderReport();
-  if(id==='months') renderMonthsGrid();
-}
-
-function handleSave() {
-  const amount = parseFloat(document.getElementById('inp-amount').value);
-  const date = document.getElementById('inp-date').value;
-  if (!amount || amount <= 0) { showToast('أدخل مبلغاً صحيحاً', '⚠️'); return; }
-
-  const split = smartSplit(amount);
-  data.days[date] = { income: amount, ...split };
-  saveStorage(data);
-
-  // Update UI
-  document.getElementById('res-income').textContent = fmt(amount);
-  document.getElementById('res-ob').textContent = fmt(split.obShare);
-  document.getElementById('res-exp').textContent = fmt(split.expense);
-  document.getElementById('res-emg').textContent = fmt(split.emergency);
-  document.getElementById('res-sav').textContent = fmt(split.savings);
-  document.getElementById('res-ent').textContent = fmt(split.entertainment);
-  
-  document.getElementById('res-ent-row').style.display = split.entertainment > 0 ? 'flex' : 'none';
-  document.getElementById('res-low-banner').style.display = (split.emergency === 0 && amount > 0) ? 'block' : 'none';
-  
-  document.getElementById('result-section').style.display = 'block';
-  document.getElementById('inp-amount').value = '';
-  
-  const btn = document.getElementById('save-btn');
-  btn.classList.add('saved');
-  btn.textContent = '✅ تم الحفظ والتوزيع';
-  setTimeout(() => {
-    btn.classList.remove('saved');
-    btn.textContent = '💾 حفظ وتوزيع تلقائي';
-  }, 2000);
-
-  render();
-  showToast('تم الحفظ بنجاح', '💰');
-}
-
-function saveDailyExpInline() {
-  const val = parseFloat(document.getElementById('inp-daily-exp-main').value);
-  if(val >= 0) {
-    SETTINGS.dailyExp = val;
-    document.getElementById('inp-daily-exp').value = val;
-    saveSettings();
-    renderSuggest();
-  }
-}
-
-function saveDailyExp() {
-  const val = parseFloat(document.getElementById('inp-daily-exp').value);
-  if(val >= 0) {
-    SETTINGS.dailyExp = val;
-    document.getElementById('inp-daily-exp-main').value = val;
-    saveSettings();
-    showToast('تم حفظ المصروف اليومي', '🛍️');
-    renderSuggest();
-  }
-}
-
-function setPct(type, val, btn) {
-  if(type === 'emg') SETTINGS.emgPct = val;
-  else SETTINGS.entPct = val;
-  saveSettings();
-  
-  const parent = btn.parentElement;
-  parent.querySelectorAll('.pct-btn').forEach(b => b.classList.remove('active-red', 'active-pink'));
-  btn.classList.add(type === 'emg' ? 'active-red' : 'active-pink');
-  showToast('تم تحديث النسبة', '⚙️');
-}
-
-// ════════════════════════════════════════
-//  RENDERING
-// ════════════════════════════════════════
-function render() {
-  const days = Object.values(data.days);
-  const totalIncome = days.reduce((s, d) => s + (d.income || 0), 0);
-  const totalExp = days.reduce((s, d) => s + (d.expense || 0), 0);
-  const totalEmg = days.reduce((s, d) => s + (d.emergency || 0), 0);
-  const totalOb  = days.reduce((s, d) => s + (d.obShare || 0), 0);
-  const totalSav = days.reduce((s, d) => s + (d.savings || 0), 0);
-  const totalEnt = days.reduce((s, d) => s + (d.entertainment || 0), 0);
-
-  // Summary Strip
-  document.getElementById('ss-income').textContent = fmt(totalIncome);
-  document.getElementById('ss-exp').textContent = fmt(totalExp);
-  document.getElementById('ss-emg').textContent = fmt(totalEmg);
-  
-  const monthOb = OBLIGATIONS.reduce((s, o) => s + o.amount, 0);
-  const remOb = Math.max(0, monthOb - totalOb);
-  const remLabel = document.getElementById('ss-rem-label');
-  const remVal = document.getElementById('ss-rem');
-  
-  if (remOb > 0) {
-    remLabel.textContent = '⏳ متبقي التزامات';
-    remVal.textContent = fmt(remOb);
-    remVal.style.color = 'var(--red)';
-  } else {
-    remLabel.textContent = '💰 فائض الشهر';
-    remVal.textContent = fmt(totalSav + totalEnt);
-    remVal.style.color = 'var(--green)';
+    document.getElementById('ss-rem-label').textContent='⏳ متبقي';
+    document.getElementById('ss-rem').style.color='var(--red)';
+    document.getElementById('ss-rem').textContent=fmt(c.obRemaining);
   }
 
-  // Progress Bar
-  const pct = totalIncome > 0 ? Math.min(100, (totalOb / monthOb) * 100) : 0;
-  document.getElementById('prog-pct').textContent = Math.round(pct) + '%';
-  
-  const totalAllocated = totalOb + totalExp + totalEmg + totalSav + totalEnt;
-  if (totalAllocated > 0) {
-    document.getElementById('seg-ob').style.width = (totalOb / totalAllocated * 100) + '%';
-    document.getElementById('seg-exp').style.width = (totalExp / totalAllocated * 100) + '%';
-    document.getElementById('seg-emg').style.width = (totalEmg / totalAllocated * 100) + '%';
-    document.getElementById('seg-sav').style.width = (totalSav / totalAllocated * 100) + '%';
-    document.getElementById('seg-ent').style.width = (totalEnt / totalAllocated * 100) + '%';
-  }
+  // Progress bar
+  const inc=c.totalIncome||1;
+  document.getElementById('seg-ob').style.width=Math.round(Math.min(c.totalOb,TOTAL_OB)/inc*100)+'%';
+  document.getElementById('seg-exp').style.width=Math.round(c.totalExp/inc*100)+'%';
+  document.getElementById('seg-emg').style.width=Math.round(c.totalEmg/inc*100)+'%';
+  document.getElementById('seg-sav').style.width=Math.round(c.totalSav/inc*100)+'%';
+  document.getElementById('seg-ent').style.width=Math.round(c.totalEnt/inc*100)+'%';
+  const pct=Math.round(c.obProgress*100);
+  document.getElementById('prog-pct').textContent=pct+'%';
+  document.getElementById('prog-pct').style.color=c.obProgress>=1?'var(--green)':'var(--yellow)';
 
-  // Obligations Tab
-  document.getElementById('dt-income').textContent = fmt(totalIncome) + ' ريال';
-  document.getElementById('dt-ob').textContent = fmt(totalOb) + ' ريال';
-  document.getElementById('dt-daily').textContent = fmt(totalExp) + ' ريال';
-  document.getElementById('dt-emg').textContent = fmt(totalEmg) + ' ريال';
-  document.getElementById('dt-sav').textContent = fmt(totalSav) + ' ريال';
-  document.getElementById('dt-ent').textContent = fmt(totalEnt) + ' ريال';
+  // Date label
+  const today=new Date(TODAY_STR+'T00:00:00');
+  document.getElementById('qe-date-label').textContent=today.toLocaleDateString('ar-SA',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
 
-  const obList = document.getElementById('ob-list-container');
-  obList.innerHTML = OBLIGATIONS.map(ob => {
-    const daysInMonth = new Date(activeYear, activeMonth, 0).getDate();
-    const paid = (totalOb / monthOb) * ob.amount;
-    return `
-      <div class="ob-list-item">
-        <div class="ob-li-left">
-          <div class="ob-li-icon">${ob.icon}</div>
-          <div>
-            <div class="ob-li-label">${ob.label}</div>
-            <div style="font-size:9px;color:var(--muted)">المطلوب: ${fmt(ob.amount)} ريال</div>
-          </div>
-        </div>
-        <div class="ob-li-amt">${fmt(paid)}</div>
+  // Obligations tab
+  document.getElementById('dt-income').textContent=fmt(c.totalIncome);
+  document.getElementById('dt-ob').textContent=fmt(c.totalOb);
+  document.getElementById('dt-daily').textContent=fmt(c.totalExp);
+  document.getElementById('dt-emg').textContent=fmt(c.totalEmg);
+  document.getElementById('dt-sav').textContent=fmt(c.totalSav);
+  document.getElementById('dt-ent').textContent=fmt(c.totalEnt);
+
+  const netPos=Math.max(c.totalOb,0);
+  document.getElementById('ob-list').innerHTML=OBLIGATIONS.map(ob=>{
+    const ratio=Math.min(netPos/TOTAL_OB,1);
+    const covered=Math.floor(ob.amount*ratio);
+    const rem=ob.amount-covered;
+    const p=Math.round((covered/ob.amount)*100);
+    const done=p>=100;
+    return `<div class="ob-card" style="border:1px solid ${done?'rgba(34,211,165,0.25)':'rgba(248,113,113,0.15)'}">
+      <div class="ob-hd">
+        <div class="ob-name"><span>${ob.icon}</span><span>${ob.label}</span></div>
+        <div class="ob-amounts"><span style="color:var(--green);font-weight:700">${fmt(covered)}</span><span style="color:var(--muted)"> / ${fmt(ob.amount)}</span></div>
       </div>
-    `;
+      <div class="ob-bar-bg"><div class="ob-bar-fill" style="width:${p}%;background:${done?'linear-gradient(90deg,var(--green),#10b981)':'linear-gradient(90deg,var(--red),var(--yellow))'}"></div></div>
+      <div class="ob-ft">
+        <span style="color:${done?'var(--green)':'var(--muted)'}">${done?'✅ اكتمل':'⏳ متبقي '+fmt(rem)}</span>
+        <span style="color:${done?'var(--green)':'var(--muted)'};font-weight:700">${p}%</span>
+      </div>
+    </div>`;
   }).join('');
 
-  // Entries List
-  const list = document.getElementById('entries-list');
-  const sortedKeys = Object.keys(data.days).sort().reverse();
-  if (sortedKeys.length === 0) {
-    list.innerHTML = '<div class="empty">لم يتم إدخال أي دخل بعد</div>';
-    document.getElementById('insights-section').style.display = 'none';
+  // Report tab
+  document.getElementById('st-days').textContent=c.daysRec;
+  document.getElementById('st-avg').textContent=fmt(c.daysRec?c.totalIncome/c.daysRec:0);
+  document.getElementById('st-sav').textContent=fmt(c.totalSav);
+  document.getElementById('st-emg').textContent=fmt(c.totalEmg);
+  document.getElementById('st-prog').textContent=Math.round(c.obProgress*100)+'%';
+  if(c.obSurplus>0){
+    document.getElementById('st-rem-icon').textContent='🎉';
+    document.getElementById('st-rem').textContent=fmt(c.obSurplus);
+    document.getElementById('st-rem').style.color='var(--green)';
+    document.getElementById('st-rem-label').textContent='الفائض';
   } else {
-    document.getElementById('insights-section').style.display = 'block';
-    document.getElementById('ins-ob').textContent = Math.round(totalOb/totalIncome*100) + '%';
-    document.getElementById('ins-exp').textContent = Math.round(totalExp/totalIncome*100) + '%';
-    document.getElementById('ins-sav').textContent = Math.round((totalSav+totalEmg)/totalIncome*100) + '%';
+    document.getElementById('st-rem-icon').textContent='⏳';
+    document.getElementById('st-rem').textContent=fmt(c.obRemaining);
+    document.getElementById('st-rem').style.color='var(--red)';
+    document.getElementById('st-rem-label').textContent='المتبقي';
+  }
 
-    list.innerHTML = sortedKeys.map(k => {
-      const v = data.days[k];
-      const d = new Date(k + 'T00:00:00');
-      const dayName = d.toLocaleDateString('ar-SA', {weekday:'long'});
-      const dateNum = d.toLocaleDateString('ar-SA', {day:'numeric', month:'short'});
-      return `
-        <div class="entry-item">
-          <div class="entry-info">
-            <div class="ei-date">${dayName}، ${dateNum}</div>
-            <div class="ei-sub">🛍️ ${fmt(v.expense)} · 📋 ${fmt(v.obShare)} · 🚨 ${fmt(v.emergency)}</div>
-          </div>
-          <div style="display:flex;align-items:center;">
-            <div class="entry-amt">
-              <div class="ea-val">${fmt(v.income)}</div>
-              <div class="ea-unit">ريال</div>
-            </div>
-            <div class="entry-actions">
-              <button class="entry-btn" onclick="openEditDayModal('${k}')">✏️</button>
-              <button class="entry-btn" onclick="confirmDeleteDay('${k}')" style="color:var(--red-dim)">🗑️</button>
-            </div>
+  // Calendar
+  const{YEAR,MONTH,DAYS_IN_MONTH}=c;
+  const dayNames=['أح','إث','ث','أر','خ','ج','س'];
+  let calHTML=dayNames.map(d=>`<div class="cal-day-hd">${d}</div>`).join('');
+  const firstDay=new Date(YEAR,MONTH,1).getDay();
+  for(let i=0;i<firstDay;i++) calHTML+='<div></div>';
+  for(let i=1;i<=DAYS_IN_MONTH;i++){
+    const m=String(MONTH+1).padStart(2,'0'),dd=String(i).padStart(2,'0');
+    const key=`${YEAR}-${m}-${dd}`;
+    const entry=data.days[key];const amt=entry?.income||0;
+    const isToday=key===TODAY_STR;
+    const isFuture=new Date(key+'T00:00:00')>TODAY;
+    const bg=amt>0?'rgba(34,211,165,0.15)':isFuture?'transparent':'rgba(255,255,255,0.03)';
+    const border=isToday?'2px solid #7c3aed':'1px solid transparent';
+    const nc=amt>0?'var(--green)':isFuture?'#1e293b':'#334155';
+    calHTML+=`<div class="cal-cell" style="background:${bg};border:${border}"><span class="cn" style="color:${nc}">${i}</span>${amt>0?`<span class="ca">${(amt/1000).toFixed(1)}k</span>`:''}</div>`;
+  }
+  document.getElementById('cal-grid').innerHTML=calHTML;
+
+  // Detail list
+  const detailPrefix=`${YEAR}-${String(MONTH+1).padStart(2,'0')}-`;
+  const detailDays=Object.entries(data.days).filter(([k])=>k.startsWith(detailPrefix)).sort((a,b)=>b[0].localeCompare(a[0]));
+  if(!detailDays.length){document.getElementById('detail-list').innerHTML='<div class="empty">لا يوجد بيانات</div>';}
+  else{
+    document.getElementById('detail-list').innerHTML=detailDays.map(([key,v])=>{
+      const inc=v.income||0;
+      const d=new Date(key+'T00:00:00');
+      return `<div class="detail-row">
+        <div class="detail-hd">
+          <span class="detail-date">يوم ${d.getDate()} · ${d.toLocaleDateString('ar-SA',{weekday:'short'})} · ${key}</span>
+          <div style="display:flex;align-items:center;gap:8px">
+            <span class="detail-amt">${fmt(inc)} ريال</span>
+            <button class="del-btn" onclick="confirmDeleteDay('${key}')">🗑️</button>
           </div>
         </div>
-      `;
+        <div class="detail-tags">
+          <span class="tag" style="color:var(--blue);background:var(--blue-dim)">📋 ${fmt(v.obShare||0)}</span>
+          <span class="tag" style="color:var(--orange);background:var(--orange-dim)">🛍️ ${fmt(v.expense||0)}</span>
+          <span class="tag" style="color:var(--red);background:var(--red-dim)">🚨 ${fmt(v.emergency||0)}</span>
+          <span class="tag" style="color:var(--yellow);background:var(--yellow-dim)">🏦 ${fmt(v.savings||0)}</span>
+          ${(v.entertainment||0)>0?`<span class="tag" style="color:var(--pink);background:var(--pink-dim)">🎉 ${fmt(v.entertainment)}</span>`:''}
+        </div>
+      </div>`;
     }).join('');
   }
-  renderSuggest();
-}
 
-function renderSuggest() {
-  const date = document.getElementById('inp-date').value;
-  const d = new Date(date + 'T00:00:00');
-  document.getElementById('qe-date-label').textContent = d.toLocaleDateString('ar-SA', {weekday:'long', day:'numeric', month:'long'});
-  
-  const daysInMonth = new Date(activeYear, activeMonth, 0).getDate();
-  const totalOb = OBLIGATIONS.reduce((s, o) => s + o.amount, 0);
-  const dailyOb = totalOb / daysInMonth;
-  const dailyExp = SETTINGS.dailyExp;
-  const suggest = dailyOb + dailyExp;
-  
-  document.getElementById('suggest-val').textContent = fmt(suggest);
-  document.getElementById('suggest-breakdown').innerHTML = `
-    <span style="font-size:9px;background:var(--blue-dim);color:var(--blue);padding:2px 6px;border-radius:4px;">📋 التزامات: ${fmt(dailyOb)}</span>
-    <span style="font-size:9px;background:var(--orange-dim);color:var(--orange);padding:2px 6px;border-radius:4px;">🛍️ مصروف: ${fmt(dailyExp)}</span>
-  `;
-}
-
-// ════════════════════════════════════════
-//  MONTH NAVIGATION
-// ════════════════════════════════════════
-function buildMonthSelector() {
-  const sel = document.getElementById('month-select');
-  let html = '';
-  const months = ["يناير","فبراير","مارس","أبريل","مايو","يونيو","يوليو","أغسطس","سبتمبر","أكتوبر","نوفمبر","ديسمبر"];
-  // Show 6 months back and 6 forward
-  for (let i = -6; i <= 6; i++) {
-    const d = new Date(now.getFullYear(), now.getMonth() + i, 1);
-    const y = d.getFullYear();
-    const m = d.getMonth() + 1;
-    const selected = (y === activeYear && m === activeMonth) ? 'selected' : '';
-    html += `<option value="${y}_${m}" ${selected}>${months[m-1]} ${y}</option>`;
+  // Entries list
+  const entryPrefix=`${activeYear}-${String(activeMonth+1).padStart(2,'0')}-`;
+  const entries=Object.entries(data.days).filter(([k])=>k.startsWith(entryPrefix)).sort((a,b)=>b[0].localeCompare(a[0])).slice(0,7);
+  const el=document.getElementById('entries-list');
+  if(!entries.length){el.innerHTML='<div class="empty">لم يتم إدخال أي دخل بعد</div>';}
+  else{
+    el.innerHTML=entries.map(([date,v])=>{
+      const inc=v.income||0;
+      const label=new Date(date+'T00:00:00').toLocaleDateString('ar-SA',{day:'numeric',month:'short',weekday:'short'});
+      return `<div class="entry-row">
+        <div>
+          <div class="entry-date">${label}</div>
+          <div style="display:flex;gap:5px;margin-top:3px;flex-wrap:wrap;">
+            <span style="font-size:9px;color:var(--blue);background:var(--blue-dim);padding:2px 6px;border-radius:5px;">📋${fmt(v.obShare||0)}</span>
+            <span style="font-size:9px;color:var(--orange);background:var(--orange-dim);padding:2px 6px;border-radius:5px;">🛍️${fmt(v.expense||0)}</span>
+            <span style="font-size:9px;color:var(--red);background:var(--red-dim);padding:2px 6px;border-radius:5px;">🚨${fmt(v.emergency||0)}</span>
+            <span style="font-size:9px;color:var(--yellow);background:var(--yellow-dim);padding:2px 6px;border-radius:5px;">🏦${fmt(v.savings||0)}</span>
+          </div>
+        </div>
+        <div style="display:flex;align-items:center;gap:8px;">
+          <div class="entry-amt">${fmt(inc)}</div>
+          <button class="del-btn" onclick="confirmDeleteDay('${date}')">🗑️</button>
+        </div>
+      </div>`;
+    }).join('');
   }
-  sel.innerHTML = html;
 }
-function onMonthSelectChange() {
-  const [y, m] = document.getElementById('month-select').value.split('_');
-  activeYear = parseInt(y); activeMonth = parseInt(m);
-  data = loadData();
-  updateMonthLabel();
+
+function switchTab(name,btn){
+  document.querySelectorAll('.tab-content').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('tab-'+name).classList.add('active');
+  btn.classList.add('active');
+  if(name==='months')renderMonthsSummary();
+}
+
+function saveEntry(){
+  const amt=parseFloat(document.getElementById('inp-amount').value);
+  if(!amt||amt<=0)return;
+  const note=document.getElementById('inp-note').value;
+  const data=loadData(activeYear,activeMonth);
+  
+  const obRem=Math.max(TOTAL_OB-(compute().totalOb),0);
+  const obShare=Math.min(amt,obRem);
+  const remAfterOb=amt-obShare;
+  const expense=Math.min(remAfterOb,SETTINGS.dailyExp);
+  const remAfterExp=remAfterOb-expense;
+  const emergency=remAfterExp*(SETTINGS.emgPct/100);
+  const remAfterEmg=remAfterExp-emergency;
+  const entertainment=remAfterEmg*(SETTINGS.entPct/100);
+  const savings=remAfterEmg-entertainment;
+
+  data.days[TODAY_STR]={income:amt,note,obShare,expense,emergency,savings,entertainment};
+  saveData(activeYear,activeMonth,data);
+  
+  document.getElementById('inp-amount').value='';
+  document.getElementById('inp-note').value='';
+  const btn=document.getElementById('btn-save');
+  btn.classList.add('saved');btn.textContent='✅ تم الحفظ';
+  setTimeout(()=>{btn.classList.remove('saved');btn.textContent='💾 حفظ الدخل';},2000);
   render();
 }
-function changeMonth(dir) {
-  const d = new Date(activeYear, activeMonth - 1 + dir, 1);
-  activeYear = d.getFullYear(); activeMonth = d.getMonth() + 1;
-  buildMonthSelector();
-  data = loadData();
-  updateMonthLabel();
-  render();
-}
-function updateMonthLabel() {
-  // Select is updated by buildMonthSelector
-}
 
-// ════════════════════════════════════════
-//  REPORT TAB
-// ════════════════════════════════════════
-function renderReport() {
-  const container = document.getElementById('report-container');
-  const days = Object.values(data.days);
-  if (days.length === 0) {
-    container.innerHTML = '<div class="empty">لا توجد بيانات لهذا الشهر لعرض التقرير</div>';
-    return;
+function confirmDeleteDay(date){
+  const modal=document.getElementById('del-modal');
+  modal.style.display='flex';
+  document.getElementById('del-modal-confirm').onclick=()=>{
+    const d=loadData(activeYear,activeMonth);
+    delete d.days[date];
+    saveData(activeYear,activeMonth,d);
+    modal.style.display='none';
+    render();
+  };
+}
+function closeDelModal(){document.getElementById('del-modal').style.display='none';}
+
+function confirmResetMonth(){
+  if(confirm('هل أنت متأكد من حذف جميع بيانات هذا الشهر؟')){
+    saveData(activeYear,activeMonth,{days:{}});
+    render();
   }
-
-  const totalIncome = days.reduce((s, d) => s + d.income, 0);
-  const totalOb = days.reduce((s, d) => s + d.obShare, 0);
-  const totalExp = days.reduce((s, d) => s + d.expense, 0);
-  const totalEmg = days.reduce((s, d) => s + d.emergency, 0);
-  const totalSav = days.reduce((s, d) => s + d.savings, 0);
-  const totalEnt = days.reduce((s, d) => s + d.entertainment, 0);
-
-  const html = `
-    <div class="card">
-      <div class="card-title"><span class="ct-icon">📊</span> ملخص الشهر</div>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:15px;">
-        <div><div style="font-size:10px;color:var(--muted);">إجمالي الدخل</div><div style="font-size:20px;font-weight:800;color:var(--green);">${fmt(totalIncome)}</div></div>
-        <div><div style="font-size:10px;color:var(--muted);">إجمالي المصاريف</div><div style="font-size:20px;font-weight:800;color:var(--orange);">${fmt(totalExp)}</div></div>
-      </div>
-      <div style="margin-top:15px;padding-top:15px;border-top:1px solid var(--border);display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;text-align:center;">
-        <div><div style="font-size:9px;color:var(--blue);">التزامات</div><div style="font-size:14px;font-weight:700;">${fmt(totalOb)}</div></div>
-        <div><div style="font-size:9px;color:var(--red);">طوارئ</div><div style="font-size:14px;font-weight:700;">${fmt(totalEmg)}</div></div>
-        <div><div style="font-size:9px;color:var(--yellow);">ادخار</div><div style="font-size:14px;font-weight:700;">${fmt(totalSav + totalEnt)}</div></div>
-      </div>
-    </div>
-    
-    <div class="entries-label">التوزيع المئوي</div>
-    <div class="card">
-      <div style="display:flex;height:30px;border-radius:8px;overflow:hidden;margin-bottom:15px;">
-        <div style="width:${totalOb/totalIncome*100}%;background:var(--blue);"></div>
-        <div style="width:${totalExp/totalIncome*100}%;background:var(--orange);"></div>
-        <div style="width:${totalEmg/totalIncome*100}%;background:var(--red);"></div>
-        <div style="width:${(totalSav+totalEnt)/totalIncome*100}%;background:var(--yellow);"></div>
-      </div>
-      <div style="font-size:11px;display:grid;grid-template-columns:1fr 1fr;gap:8px;">
-        <div style="color:var(--blue);">● الالتزامات: ${Math.round(totalOb/totalIncome*100)}%</div>
-        <div style="color:var(--orange);">● المصاريف: ${Math.round(totalExp/totalIncome*100)}%</div>
-        <div style="color:var(--red);">● الطوارئ: ${Math.round(totalEmg/totalIncome*100)}%</div>
-        <div style="color:var(--yellow);">● الادخار: ${Math.round((totalSav+totalEnt)/totalIncome*100)}%</div>
-      </div>
-    </div>
-  `;
-  container.innerHTML = html;
 }
 
-// ════════════════════════════════════════
-//  MONTHS TAB
-// ════════════════════════════════════════
-function renderMonthsGrid() {
-  const grid = document.getElementById('months-grid');
-  const months = ["يناير","فبراير","مارس","أبريل","مايو","يونيو","يوليو","أغسطس","سبتمبر","أكتوبر","نوفمبر","ديسمبر"];
-  let html = '';
-  
-  // Calculate grand total across all months in storage
-  let grandTotal = { inc:0, exp:0, ob:0, emg:0, sav:0 };
-  
-  // Show last 12 months
-  for (let i = 0; i < 12; i++) {
-    const d = new Date(now.getFullYear(), now.getMonth() - i, 1);
-    const y = d.getFullYear();
-    const m = d.getMonth() + 1;
-    const key = `${STORAGE_PREFIX}${y}_${m}`;
-    const mData = JSON.parse(localStorage.getItem(key)) || { days: {} };
-    const mDays = Object.values(mData.days);
-    
-    const inc = mDays.reduce((s, d) => s + d.income, 0);
-    const exp = mDays.reduce((s, d) => s + d.expense, 0);
-    
-    grandTotal.inc += inc;
-    grandTotal.exp += exp;
-
-    html += `
-      <div class="month-card" onclick="jumpToMonth(${y},${m})">
-        <div class="mc-name">${months[m-1]} ${y}</div>
-        <div class="mc-stat"><span style="color:var(--muted)">دخل:</span><span class="mc-val" style="color:var(--green)">${fmt(inc)}</span></div>
-        <div class="mc-stat"><span style="color:var(--muted)">صرف:</span><span class="mc-val" style="color:var(--orange)">${fmt(exp)}</span></div>
-      </div>
-    `;
-  }
-  
-  const totalBox = `
-    <div class="card" style="grid-column: span 2; margin-top:10px; background:linear-gradient(135deg,rgba(34,211,165,0.1),rgba(124,58,237,0.1));">
-      <div class="card-title">🌍 إجمالي جميع الأشهر</div>
-      <div style="display:flex;justify-content:space-between;align-items:center;">
-        <div><div style="font-size:10px;color:var(--muted)">إجمالي الدخل</div><div style="font-size:22px;font-weight:800;color:var(--green)">${fmt(grandTotal.inc)}</div></div>
-        <div style="text-align:left;"><div style="font-size:10px;color:var(--muted)">إجمالي الصرف</div><div style="font-size:22px;font-weight:800;color:var(--orange)">${fmt(grandTotal.exp)}</div></div>
-      </div>
-    </div>
-  `;
-  grid.innerHTML = totalBox + html;
+// ── Obligations Manager ──
+function openObMgr(){
+  document.getElementById('ob-mgr-modal').style.display='flex';
+  renderObMgrList();
 }
-
-function jumpToMonth(y,m){
-  activeYear=y;activeMonth=m;buildMonthSelector();data=loadData();updateMonthLabel();render();
-  switchTab('daily',document.querySelector('.tab-btn'));
-}
-
-// ════════════════════════════════════════
-//  OBLIGATIONS MANAGER
-// ════════════════════════════════════════
-function openObMgr(){renderObMgrList();resetObForm();document.getElementById('ob-mgr-modal').classList.add('show');}
-function closeObMgr(){document.getElementById('ob-mgr-modal').classList.remove('show');render();}
+function closeObMgr(){document.getElementById('ob-mgr-modal').style.display='none';}
 function renderObMgrList(){
-  document.getElementById('ob-mgr-total').textContent=fmt(OBLIGATIONS.reduce((s,o)=>s+o.amount,0))+' ريال';
-  document.getElementById('ob-mgr-list').innerHTML=OBLIGATIONS.map(ob=>`
-    <div class="ob-item-row">
-      <div class="ob-item-icon">${ob.icon}</div>
-      <div class="ob-item-info"><div class="ob-item-label">${ob.label}</div><div class="ob-item-amt">${fmt(ob.amount)} ريال / شهر</div></div>
-      <button class="ob-edit-btn" onclick="editObligation('${ob.id}')">✏️</button>
-      <button class="ob-del-btn2" onclick="deleteObligation('${ob.id}')">🗑️</button>
+  document.getElementById('ob-mgr-total').textContent=fmt(TOTAL_OB)+' ريال';
+  document.getElementById('ob-mgr-list').innerHTML=OBLIGATIONS.map(o=>`
+    <div class="ob-mgr-item">
+      <div class="ob-mgr-info"><span>${o.icon}</span><b>${o.label}</b><span>${fmt(o.amount)}</span></div>
+      <div class="ob-mgr-btns">
+        <button class="ob-mgr-btn" onclick="editOb('${o.id}')">✏️</button>
+        <button class="ob-mgr-btn" onclick="deleteOb('${o.id}')">🗑️</button>
+      </div>
     </div>`).join('');
 }
-function pickIcon(el,icon){document.querySelectorAll('.ob-icon-pick').forEach(e=>e.classList.remove('selected'));el.classList.add('selected');selectedObIcon=icon;}
-function resetObForm(){
-  document.getElementById('ob-form-title').textContent='➕ إضافة التزام جديد';
-  document.getElementById('ob-inp-label').value='';document.getElementById('ob-inp-amount').value='';document.getElementById('ob-edit-id').value='';
-  selectedObIcon='🏠';
-  document.querySelectorAll('.ob-icon-pick').forEach(e=>e.classList.remove('selected'));
-  document.querySelector('.ob-icon-pick').classList.add('selected');
-}
-function editObligation(id){
-  const ob=OBLIGATIONS.find(o=>o.id===id);if(!ob)return;
-  document.getElementById('ob-form-title').textContent='✏️ تعديل الالتزام';
-  document.getElementById('ob-inp-label').value=ob.label;document.getElementById('ob-inp-amount').value=ob.amount;document.getElementById('ob-edit-id').value=id;
-  selectedObIcon=ob.icon;
-  document.querySelectorAll('.ob-icon-pick').forEach(e=>{e.classList.remove('selected');if(e.textContent===ob.icon)e.classList.add('selected');});
+function pickIcon(el,icon){
+  document.querySelectorAll('.ob-icon-pick').forEach(i=>i.classList.remove('selected'));
+  el.classList.add('selected');
+  selectedObIcon=icon;
 }
 function saveObligationForm(){
-  const label=document.getElementById('ob-inp-label').value.trim();
+  const label=document.getElementById('ob-inp-label').value;
   const amount=parseFloat(document.getElementById('ob-inp-amount').value);
   const editId=document.getElementById('ob-edit-id').value;
-  if(!label||!amount||amount<=0){alert('أدخل الاسم والمبلغ');return;}
-  if(editId){const idx=OBLIGATIONS.findIndex(o=>o.id===editId);if(idx!==-1)OBLIGATIONS[idx]={id:editId,label,amount,icon:selectedObIcon};}
-  else{OBLIGATIONS.push({id:'ob_'+Date.now(),label,amount,icon:selectedObIcon});}
-  saveObligations();renderObMgrList();resetObForm();
+  if(!label||!amount)return;
+  if(editId){
+    const idx=OBLIGATIONS.findIndex(o=>o.id===editId);
+    if(idx>-1)OBLIGATIONS[idx]={id:editId,label,amount,icon:selectedObIcon};
+  }else{
+    OBLIGATIONS.push({id:Date.now().toString(),label,amount,icon:selectedObIcon});
+  }
+  saveObligations();
+  document.getElementById('ob-inp-label').value='';
+  document.getElementById('ob-inp-amount').value='';
+  document.getElementById('ob-edit-id').value='';
+  renderObMgrList();render();
 }
-function deleteObligation(id){
-  if(!confirm('حذف هذا الالتزام؟'))return;
-  OBLIGATIONS=OBLIGATIONS.filter(o=>o.id!==id);saveObligations();renderObMgrList();
+function deleteOb(id){OBLIGATIONS=OBLIGATIONS.filter(o=>o.id!==id);saveObligations();renderObMgrList();render();}
+function editOb(id){
+  const o=OBLIGATIONS.find(x=>x.id===id);
+  if(!o)return;
+  document.getElementById('ob-inp-label').value=o.label;
+  document.getElementById('ob-inp-amount').value=o.amount;
+  document.getElementById('ob-edit-id').value=o.id;
+  document.getElementById('ob-form-title').textContent='✏️ تعديل التزام';
 }
 
-// ════════════════════════════════════════
-//  BACKUP & RESTORE
-// ════════════════════════════════════════
-function exportData() {
-  const exportData = {
-    version: "1.0",
-    exportDate: new Date().toISOString(),
-    obligations: OBLIGATIONS,
-    settings: SETTINGS,
-    data: {}
-  };
-  // Collect all data from localStorage
-  for (let i = 0; i < localStorage.length; i++) {
-    const key = localStorage.key(i);
-    if (key.startsWith(STORAGE_PREFIX)) {
-      exportData.data[key] = JSON.parse(localStorage.getItem(key));
+// ── Settings ──
+function saveDailyExp(){
+  const v=parseFloat(document.getElementById('inp-daily-exp').value);
+  if(v>=0){SETTINGS.dailyExp=v;saveSettings();alert('تم الحفظ');}
+}
+function selectEmgPct(btn,p){
+  document.querySelectorAll('#emg-pct-btns .pct-btn').forEach(b=>b.classList.remove('active-red'));
+  btn.classList.add('active-red');
+  SETTINGS.emgPct=p;saveSettings();
+}
+function selectEntPct(btn,p){
+  document.querySelectorAll('#ent-pct-btns .pct-btn').forEach(b=>b.classList.remove('active-pink'));
+  btn.classList.add('active-pink');
+  SETTINGS.entPct=p;saveSettings();
+}
+
+// ── Month Nav ──
+function initMonthSelect(){
+  const s=document.getElementById('month-select');
+  let html='';
+  for(let y=2026;y<=2030;y++){
+    for(let m=0;m<12;m++){
+      const sel=(y===activeYear&&m===activeMonth)?'selected':'';
+      html+=`<option value="${y}-${m}" ${sel}>${ARABIC_MONTHS[m]} ${y}</option>`;
     }
   }
-  const blob = new Blob([JSON.stringify(exportData, null, 2)], {type: 'application/json'});
+  s.innerHTML=html;
+}
+function changeMonth(){
+  const[y,m]=document.getElementById('month-select').value.split('-');
+  activeYear=parseInt(y);activeMonth=parseInt(m);
+  render();
+}
+function navMonth(dir){
+  activeMonth+=dir;
+  if(activeMonth<0){activeMonth=11;activeYear--;}
+  if(activeMonth>11){activeMonth=0;activeYear++;}
+  initMonthSelect();render();
+}
+
+// ── Export Data ──
+function exportData() {
+  const allData = {};
+  for (let i = 0; i < localStorage.length; i++) {
+    const key = localStorage.key(i);
+    if (key.startsWith('smart_data_') || key === 'obligations_v1' || key === 'smart_settings_v1') {
+      allData[key] = localStorage.getItem(key);
+    }
+  }
+  const blob = new Blob([JSON.stringify(allData)], { type: 'application/json' });
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a');
   a.href = url;
-  a.download = `مدير_دخلي_نسخة_احتياطية_${new Date().toISOString().split('T')[0]}.json`;
+  a.download = `anas_store_backup_${new Date().toISOString().split('T')[0]}.json`;
   document.body.appendChild(a);
   a.click();
   document.body.removeChild(a);
   URL.revokeObjectURL(url);
-  showToast('تم تصدير النسخة الاحتياطية بنجاح', '📥');
 }
 
-function importData(event) {
-  const file = event.target.files[0];
-  if (!file) return;
-  
-  const reader = new FileReader();
-  reader.onload = function(e) {
-    try {
-      const imported = JSON.parse(e.target.result);
-      if (!confirm('هل أنت متأكد؟ سيتم استبدال جميع البيانات الحالية بالبيانات المستوردة.')) return;
-      
-      // Clear current relevant data
-      for (let i = localStorage.length - 1; i >= 0; i--) {
-        const key = localStorage.key(i);
-        if (key.startsWith(STORAGE_PREFIX) || key === SETTINGS_KEY || key === OB_KEY) {
-          localStorage.removeItem(key);
-        }
-      }
-      
-      // Restore obligations and settings
-      if (imported.obligations) localStorage.setItem(OB_KEY, JSON.stringify(imported.obligations));
-      if (imported.settings) localStorage.setItem(SETTINGS_KEY, JSON.stringify(imported.settings));
-      
-      // Restore all month data
-      if (imported.data) {
-        for (const key in imported.data) {
-          localStorage.setItem(key, JSON.stringify(imported.data[key]));
-        }
-      }
-      
-      showToast('تم استعادة البيانات بنجاح!', '✅');
-      setTimeout(() => location.reload(), 1500);
-    } catch (err) {
-      alert('خطأ في قراءة الملف. تأكد أنه ملف نسخة احتياطية صحيح.');
-    }
-  };
-  reader.readAsText(file);
-}
-
-// ════════════════════════════════════════
-//  EDIT DAY MODAL
-// ════════════════════════════════════════
-let editingDateKey = null;
-
-function openEditDayModal(dateKey) {
-  editingDateKey = dateKey;
-  const v = data.days[dateKey] || {};
-  const inc = v.income || 0;
-  const d = new Date(dateKey + 'T00:00:00');
-  const label = d.toLocaleDateString('ar-SA', {weekday:'long', day:'numeric', month:'long', year:'numeric'});
-
-  document.getElementById('edit-day-date-label').textContent = label + ' · ' + dateKey;
-  document.getElementById('edit-day-total-val').textContent = fmt(inc) + ' ريال';
-  document.getElementById('edit-income-val').value = inc || '';
-  document.getElementById('edit-ob-val').value = v.obShare || '';
-  document.getElementById('edit-exp-val').value = v.expense || '';
-  document.getElementById('edit-emg-val').value = v.emergency || '';
-  document.getElementById('edit-sav-val').value = v.savings || '';
-  document.getElementById('edit-ent-val').value = v.entertainment || '';
-  updateEditTotal();
-  document.getElementById('edit-day-modal').classList.add('show');
-}
-
-function closeEditDayModal() {
-  document.getElementById('edit-day-modal').classList.remove('show');
-  editingDateKey = null;
-}
-
-function onEditIncomeChange() {
-  const inc = parseFloat(document.getElementById('edit-income-val').value) || 0;
-  document.getElementById('edit-day-total-val').textContent = fmt(inc) + ' ريال';
-  updateEditTotal();
-}
-
-function updateEditTotal() {
-  const ob  = parseFloat(document.getElementById('edit-ob-val').value)  || 0;
-  const exp = parseFloat(document.getElementById('edit-exp-val').value) || 0;
-  const emg = parseFloat(document.getElementById('edit-emg-val').value) || 0;
-  const sav = parseFloat(document.getElementById('edit-sav-val').value) || 0;
-  const ent = parseFloat(document.getElementById('edit-ent-val').value) || 0;
-  const total = ob + exp + emg + sav + ent;
-  const inc = parseFloat(document.getElementById('edit-income-val').value) || 0;
-  const el = document.getElementById('edit-sum-check');
-  el.textContent = fmt(total) + ' ريال';
-  if (inc > 0) {
-    el.style.color = Math.abs(total - inc) <= 1 ? 'var(--green)' : (total > inc ? 'var(--red)' : 'var(--yellow)');
-  } else {
-    el.style.color = 'var(--muted)';
+// ── PWA ──
+let deferredPrompt;
+window.addEventListener('beforeinstallprompt',(e)=>{
+  e.preventDefault();deferredPrompt=e;
+  document.getElementById('install-banner').classList.add('show');
+});
+function installPWA(){
+  if(deferredPrompt){
+    deferredPrompt.prompt();
+    deferredPrompt.userChoice.then(()=>hideInstallBanner());
   }
 }
-
-function applyAutoSplitEdit() {
-  const inc = parseFloat(document.getElementById('edit-income-val').value);
-  if (!inc || inc <= 0) { document.getElementById('edit-income-val').focus(); return; }
-  const split = smartSplit(inc);
-  document.getElementById('edit-ob-val').value  = split.obShare || '';
-  document.getElementById('edit-exp-val').value = split.expense || '';
-  document.getElementById('edit-emg-val').value = split.emergency || '';
-  document.getElementById('edit-sav-val').value = split.savings || '';
-  document.getElementById('edit-ent-val').value = split.entertainment || '';
-  updateEditTotal();
-}
-
-function saveEditDay() {
-  if (!editingDateKey) return;
-  const inc = parseFloat(document.getElementById('edit-income-val').value);
-  if (!inc || inc <= 0) { document.getElementById('edit-income-val').focus(); return; }
-  const ob  = parseFloat(document.getElementById('edit-ob-val').value)  || 0;
-  const exp = parseFloat(document.getElementById('edit-exp-val').value) || 0;
-  const emg = parseFloat(document.getElementById('edit-emg-val').value) || 0;
-  const sav = parseFloat(document.getElementById('edit-sav-val').value) || 0;
-  const ent = parseFloat(document.getElementById('edit-ent-val').value) || 0;
-
-  data.days[editingDateKey] = {
-    income: inc,
-    obShare: ob,
-    expense: exp,
-    emergency: emg,
-    savings: sav,
-    entertainment: ent
-  };
-  saveStorage(data);
-  closeEditDayModal();
-  render();
-  showToast('تم تعديل بيانات اليوم بنجاح', '✏️');
-}
-
-// ════════════════════════════════════════
-//  DELETE HELPERS
-// ════════════════════════════════════════
-let pendingDeleteKey=null,pendingDeleteType=null;
-function confirmDeleteDay(dateKey){
-  pendingDeleteKey=dateKey;pendingDeleteType='day';
-  const v=data.days[dateKey];
-  const label=new Date(dateKey+'T00:00:00').toLocaleDateString('ar-SA',{day:'numeric',month:'long',weekday:'long'});
-  document.getElementById('del-modal-title').textContent='حذف دخل '+label+'؟';
-  document.getElementById('del-modal-sub').textContent='المبلغ: '+fmt(v?.income||0)+' ريال';
-  document.getElementById('del-modal-confirm').onclick=executeDelete;
-  document.getElementById('del-modal').classList.add('show');
-}
-function confirmResetMonth(){
-  pendingDeleteType='month';
-  document.getElementById('del-modal-title').textContent='حذف بيانات الشهر كاملة؟';
-  document.getElementById('del-modal-sub').textContent='سيتم حذف جميع إدخالات هذا الشهر';
-  document.getElementById('del-modal-confirm').onclick=executeDelete;
-  document.getElementById('del-modal').classList.add('show');
-}
-function closeDelModal(){document.getElementById('del-modal').classList.remove('show');pendingDeleteKey=null;pendingDeleteType=null;}
-function executeDelete(){
-  if(pendingDeleteType==='day'&&pendingDeleteKey)delete data.days[pendingDeleteKey];
-  else if(pendingDeleteType==='month')data.days={};
-  saveStorage(data);closeDelModal();
-  document.getElementById('result-section').style.display='none';
-  render();
-}
-
-// ════════════════════════════════════════
-//  PWA INSTALLATION & SERVICE WORKER
-// ════════════════════════════════════════
-let deferredPrompt=null;
+function hideInstallBanner(){document.getElementById('install-banner').classList.remove('show');}
 const isIOS=/iPad|iPhone|iPod/.test(navigator.userAgent)&&!window.MSStream;
-const isStandalone=window.matchMedia('(display-mode: standalone)').matches||navigator.standalone;
+const isStandalone=window.matchMedia('(display-mode: standalone)').matches;
+if(isIOS&&!isStandalone){setTimeout(()=>document.getElementById('ios-guide').classList.add('show'),3000);}
+function hideIOSGuide(){document.getElementById('ios-guide').classList.remove('show');}
 
-if(!isStandalone){
-  if(isIOS){
-    setTimeout(()=>{
-      const guide=document.getElementById('ios-guide');
-      if(guide) guide.classList.add('show');
-    },1500);
-  } else {
-    window.addEventListener('beforeinstallprompt',e=>{
-      e.preventDefault();
-      deferredPrompt=e;
-      const banner=document.getElementById('install-banner');
-      if(banner) banner.classList.add('show');
-    });
-  }
-}
+if('serviceWorker' in navigator){navigator.serviceWorker.register('sw.js');}
 
-function installApp(){
-  if(!deferredPrompt)return;
-  deferredPrompt.prompt();
-  deferredPrompt.userChoice.then(()=>{
-    deferredPrompt=null;
-    const banner=document.getElementById('install-banner');
-    if(banner) banner.classList.remove('show');
-    showToast('✅ تم تثبيت التطبيق بنجاح!','📋');
-  });
-}
-
-function dismissInstall(){
-  const banner=document.getElementById('install-banner');
-  if(banner) banner.classList.remove('show');
-}
-
-if('serviceWorker' in navigator){
-  window.addEventListener('load',()=>{
-    navigator.serviceWorker.register('/anas-store-app/sw.js')
-      .then(reg=>{
-        console.log('✅ Service Worker تم تسجيله بنجاح');
-      })
-      .catch(err=>console.log('⚠️ Service Worker لم يتم تسجيله:',err));
-  });
-}
-
-// ════════════════════════════════════════
-//  INIT
-// ════════════════════════════════════════
-document.getElementById('inp-date').value=TODAY_STR;
-document.getElementById('inp-daily-exp').value=SETTINGS.dailyExp;
-document.getElementById('inp-daily-exp-main').value=SETTINGS.dailyExp;
-// Set pct buttons state
-document.querySelectorAll('#emg-pct-btns .pct-btn').forEach(b=>{
-  if(parseInt(b.textContent)===SETTINGS.emgPct)b.classList.add('active-red');
-  else b.classList.remove('active-red');
-});
-document.querySelectorAll('#ent-pct-btns .pct-btn').forEach(b=>{
-  if(parseInt(b.textContent)===SETTINGS.entPct)b.classList.add('active-pink');
-  else b.classList.remove('active-pink');
-});
-buildMonthSelector();
-updateMonthLabel();
+// Init
+initMonthSelect();
 render();
 </script>
 </body>
