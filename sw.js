@@ -1,24 +1,38 @@
-const CACHE_NAME = 'anas-store-v1';
+const CACHE_NAME = 'anas-store-v2';
 const ASSETS = [
-    './',
-    'index.html',
-    'manifest.json',
-    'app_icon_192x192.png',
-    'app_icon_512x512.png'
-  ];
+      './',
+      'index.html',
+      'manifest.json',
+      'app_icon_192x192.png',
+      'app_icon_512x512.png'
+    ];
 
 self.addEventListener('install', (event) => {
-    event.waitUntil(
-          caches.open(CACHE_NAME).then((cache) => {
-                  return cache.addAll(ASSETS);
-          })
-        );
+      event.waitUntil(
+              caches.open(CACHE_NAME).then((cache) => {
+                        return cache.addAll(ASSETS);
+              })
+            );
 });
 
 self.addEventListener('fetch', (event) => {
-    event.respondWith(
-          caches.match(event.request).then((response) => {
-                  return response || fetch(event.request);
-          })
-        );
+      event.respondWith(
+              caches.match(event.request).then((response) => {
+                        return response || fetch(event.request);
+              })
+            );
+});
+
+self.addEventListener('activate', (event) => {
+      event.waitUntil(
+              caches.keys().then((cacheNames) => {
+                        return Promise.all(
+                                    cacheNames.map((cacheName) => {
+                                                  if (cacheName !== CACHE_NAME) {
+                                                                  return caches.delete(cacheName);
+                                                  }
+                                    })
+                                  );
+              })
+            );
 });
