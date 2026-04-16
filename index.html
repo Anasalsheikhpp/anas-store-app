@@ -1,37 +1,58 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
-  <meta name="mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="apple-mobile-web-app-title" content="المدير المالي">
-  <meta name="theme-color" content="#7c3aed">
-  <link rel="manifest" href="manifest.json">
-  <link rel="icon" type="image/png" href="app_icon_192x192.png" sizes="192x192">
-  <link rel="icon" type="image/png" href="app_icon_512x512.png" sizes="512x512">
-  <link rel="apple-touch-icon" href="app_icon_192x192.png">
-  <title>مدير دخلي الذكي</title>
-  <style>
-    :root {
-      --bg: #0f172a; --surface: #1e293b; --text: #f8fafc; --purple: #a78bfa; --green: #22d3ee;
-    }
-    body { background: var(--bg); color: var(--text); font-family: sans-serif; direction: rtl; padding: 20px; }
-    .card { background: var(--surface); padding: 20px; border-radius: 15px; margin-bottom: 15px; }
-    h1 { color: var(--purple); }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="المدير المالي">
+<meta name="theme-color" content="#7c3aed">
+<meta name="description" content="تطبيق ذكي لإدارة الدخل اليومي والتوزيع التلقائي للمصروفات والالتزامات">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" type="image/png" href="app_icon_192x192.png" sizes="192x192">
+<link rel="icon" type="image/png" href="app_icon_512x512.png" sizes="512x512">
+<link rel="apple-touch-icon" href="app_icon_192x192.png">
+<title>مدير دخلي الذكي</title>
+<style>
+:root {
+  --bg:        #070b14;
+  --bg2:       #0d1321;
+  --surface:   rgba(255,255,255,0.05);
+  --border:    rgba(255,255,255,0.09);
+  --green:     #22d3a5;  --green-dim: rgba(34,211,165,0.15);
+  --yellow:    #fbbf24;  --yellow-dim:rgba(251,191,36,0.15);
+  --orange:    #fb923c;  --orange-dim:rgba(251,146,60,0.15);
+  --blue:      #60a5fa;  --blue-dim:  rgba(96,165,250,0.15);
+  --red:       #f87171;  --red-dim:   rgba(248,113,113,0.15);
+  --purple:    #a78bfa;  --purple-dim:rgba(167,139,250,0.15);
+  --pink:      #f472b6;  --pink-dim:  rgba(244,114,182,0.15);
+  --text:      #e2e8f0;
+  --muted:     #64748b;
+  --radius:    16px;
+  --gold:      #fbbf24;
+  --gold-dim:  rgba(251,191,36,0.1);
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
+body{
+  min-height:100vh;
+  background:radial-gradient(ellipse at top,#0f172a 0%,#070b14 60%);
+  font-family:'Segoe UI',Tahoma,sans-serif;
+  direction:rtl;color:var(--text);
+  padding-bottom:100px;
+}
+</style>
 </head>
 <body>
-  <div class="card">
-    <h1>مدير دخلي الذكي</h1>
-    <p>جاري تحميل التطبيق...</p>
-  </div>
+  <div id="app-root"></div>
   <script>
     if('serviceWorker' in navigator) {
       navigator.serviceWorker.register('sw.js');
     }
-    window.location.reload();
+    // تم حذف كود إعادة التحميل اللانهائي
+    document.getElementById('app-root').innerHTML = '<div style="padding:20px;text-align:center;"><h1>جاري تشغيل التطبيق...</h1></div>';
+    // سيتم استبدال هذا الجزء بالكود الكامل في الخطوة التالية
   </script>
 </body>
 </html>
